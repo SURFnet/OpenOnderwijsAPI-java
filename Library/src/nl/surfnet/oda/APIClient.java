@@ -1,5 +1,8 @@
 package nl.surfnet.oda;
 
+import java.util.HashMap;
+import java.util.Map;
+
 import org.json.JSONObject;
 
 import android.content.Context;
@@ -18,13 +21,14 @@ import com.android.volley.toolbox.Volley;
  */
 public class APIClient {
 
+    private final static String FORMAT = "?format=json";
     private String _baseUrl;
     private RequestQueue _requestQueue;
 
     /**
      * Creates a new API client.
-     * 
-     * @param context Context of the application. For example: Activity.getContext().
+     *
+     * @param context Context of the application. For example an Activity
      * @param baseUrl The URL of the API. E.g. "https://api.example.com/".
      */
     public APIClient(Context context, String baseUrl) {
@@ -46,9 +50,16 @@ public class APIClient {
      */
     public void get(String path, Response.Listener<JSONObject> responseListener, Response.ErrorListener errorListener) {
         String url = _createRequestUrl(path);
-        JsonObjectRequest request = new JsonObjectRequest(Request.Method.GET, url, null, responseListener, errorListener);
+        JsonObjectRequest request = new JsonObjectRequest(Request.Method.GET, url, null, responseListener, errorListener) {
+            // Most authentication frameworks need to add additional headers to each request
+            @Override
+            public java.util.Map<String, String> getHeaders() throws com.android.volley.AuthFailureError {
+                return _addHeaders();
+            };
+        };
         _requestQueue.add(request);
     }
+
 
     /**
      * Performs a POST method to send data to the API.
@@ -60,17 +71,35 @@ public class APIClient {
      */
     public void post(String path, JSONObject params, Response.Listener<JSONObject> responseListener, Response.ErrorListener errorListener) {
         String url = _createRequestUrl(path);
-        JsonObjectRequest request = new JsonObjectRequest(Request.Method.POST, url, params, responseListener, errorListener);
+        JsonObjectRequest request = new JsonObjectRequest(Request.Method.POST, url, params, responseListener, errorListener) {
+            // Most authentication frameworks need to add additional headers to each request
+            @Override
+            public java.util.Map<String, String> getHeaders() throws com.android.volley.AuthFailureError {
+                return _addHeaders();
+            };
+        };
         _requestQueue.add(request);
     }
 
     /**
-     * Makes a full url from the path string using the base url.
-     *
+     * Makes a full url from the path string using the base url. Adds the format to it, ensuring that the response will be a JSON object.
+     * 
      * @param path path to the resource, like "buildings/1/".
      * @return the full URL, like "https://api.company.com/buildings/1/".
      */
     private String _createRequestUrl(String path) {
-        return _baseUrl + path;
+        return _baseUrl + path + FORMAT;
+    }
+
+    /**
+     * If you need to add headers to each request (authorization headers, for example), then add them to the hashmap
+     *
+     * @return Map containing the headers. Used by the API methods
+     */
+    protected Map<String, String> _addHeaders() {
+        Map<String, String> headers = new HashMap<String, String>();
+        // add headers like this
+        // headers.put("key", "value");
+        return headers;
     }
 }
