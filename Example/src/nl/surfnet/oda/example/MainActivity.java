@@ -2,11 +2,12 @@ package nl.surfnet.oda.example;
 
 import java.util.List;
 
-import nl.surfnet.oda.APIClient;
-import nl.surfnet.oda.APIWrapper;
-import nl.surfnet.oda.entity.Person;
+import nl.surfnet.oda.ListHandler;
+import nl.surfnet.oda.persons.Person;
+import nl.surfnet.oda.persons.PersonsClient;
 import android.app.Activity;
 import android.os.Bundle;
+import android.widget.TextView;
 import android.widget.Toast;
 
 /**
@@ -21,25 +22,24 @@ public class MainActivity extends Activity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        // Create a new API client
-        APIClient apiClient = new APIClient(this, "http://imogen.surfnet.nl:8001/");
-        // Create a wrapper for the client
-        APIWrapper apiWrapper = new APIWrapper(apiClient);
-        // Retreive the persons info
-        apiWrapper.getPersons(new APIWrapper.PersonsListener() {
+        final TextView numberOfPersons = (TextView)findViewById(R.id.numberOfPersons);
+        // Create a new client for getting the persons
+        PersonsClient personsClient = new PersonsClient(this, "http://imogen.surfnet.nl:8001/");
+        // Retrieve the persons info
+        personsClient.getList(new ListHandler<Person>() {
 
             @Override
-            public void onResponse(List<Person> persons) {
-                // display a simple toast with the number of persons
-                Toast.makeText(MainActivity.this, "There are " + persons.size() + " persons.", Toast.LENGTH_LONG).show();
+            public void onComplete(List<Person> list) {
+                // display the number of persons in the UI
+                numberOfPersons.setText("There are " + list.size() + " persons.");
             }
 
             @Override
-            public void onError(Exception error) {
+            public void onError(Exception e) {
                 // if an error happened, inform the user
+                numberOfPersons.setText("Error :-(");
                 Toast.makeText(MainActivity.this, "An error happened. Check if you have internet connection.", Toast.LENGTH_LONG).show();
             }
         });
     }
-
 }

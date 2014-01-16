@@ -19,7 +19,7 @@ import com.android.volley.toolbox.Volley;
  * @author Daniel Zolnai
  *
  */
-public class APIClient {
+public abstract class APIClient {
 
     private final static String FORMAT = "?format=json";
     private String _baseUrl;
@@ -41,14 +41,13 @@ public class APIClient {
     }
 
     /**
-     * Returns a resource from the API using a GET method. Use this when you want to parse the data your own way, or you need to access resources, which are not
-     * available through the API client.
-     *
+     * Returns a resource from the API using a GET method.
+     * 
      * @param path Path to the resource. Use the path to append additional parameters to the request. Example: "groups/2".
      * @param responseListener Callback for the response. The listener is called when there's a response.
      * @param errorListener Callback for errors.
      */
-    public void get(String path, Response.Listener<JSONObject> responseListener, Response.ErrorListener errorListener) {
+    protected void get(String path, Response.Listener<JSONObject> responseListener, Response.ErrorListener errorListener) {
         String url = _createRequestUrl(path);
         JsonObjectRequest request = new JsonObjectRequest(Request.Method.GET, url, null, responseListener, errorListener) {
             // Most authentication frameworks need to add additional headers to each request
@@ -60,7 +59,6 @@ public class APIClient {
         _requestQueue.add(request);
     }
 
-
     /**
      * Performs a POST method to send data to the API.
      *
@@ -69,7 +67,7 @@ public class APIClient {
      * @param responseListener Response callback.
      * @param errorListener Error callback.
      */
-    public void post(String path, JSONObject params, Response.Listener<JSONObject> responseListener, Response.ErrorListener errorListener) {
+    protected void post(String path, JSONObject params, Response.Listener<JSONObject> responseListener, Response.ErrorListener errorListener) {
         String url = _createRequestUrl(path);
         JsonObjectRequest request = new JsonObjectRequest(Request.Method.POST, url, params, responseListener, errorListener) {
             // Most authentication frameworks need to add additional headers to each request
@@ -83,7 +81,7 @@ public class APIClient {
 
     /**
      * Makes a full url from the path string using the base url. Adds the format to it, ensuring that the response will be a JSON object.
-     * 
+     *
      * @param path path to the resource, like "buildings/1/".
      * @return the full URL, like "https://api.company.com/buildings/1/".
      */

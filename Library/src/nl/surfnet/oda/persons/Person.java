@@ -1,4 +1,4 @@
-package nl.surfnet.oda.entity;
+package nl.surfnet.oda.persons;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
