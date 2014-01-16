@@ -1,8 +1,10 @@
 package nl.surfnet.oda;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
+import org.apache.http.NameValuePair;
 import org.json.JSONObject;
 
 import android.content.Context;
@@ -21,7 +23,6 @@ import com.android.volley.toolbox.Volley;
  */
 public abstract class APIClient {
 
-    private final static String FORMAT = "?format=json";
     private String _baseUrl;
     private RequestQueue _requestQueue;
 
@@ -42,7 +43,7 @@ public abstract class APIClient {
 
     /**
      * Returns a resource from the API using a GET method.
-     * 
+     *
      * @param path Path to the resource. Use the path to append additional parameters to the request. Example: "groups/2".
      * @param responseListener Callback for the response. The listener is called when there's a response.
      * @param errorListener Callback for errors.
@@ -80,24 +81,48 @@ public abstract class APIClient {
     }
 
     /**
-     * Makes a full url from the path string using the base url. Adds the format to it, ensuring that the response will be a JSON object.
+     * Makes a full url from the path string using the base url.
      *
      * @param path path to the resource, like "buildings/1/".
      * @return the full URL, like "https://api.company.com/buildings/1/".
      */
     private String _createRequestUrl(String path) {
-        return _baseUrl + path + FORMAT;
+        return _baseUrl + path;
     }
 
     /**
-     * If you need to add headers to each request (authorization headers, for example), then add them to the hashmap
+     * If you need to add headers to each request (authorization headers, for example), then add them to the map.
      *
      * @return Map containing the headers. Used by the API methods
      */
     protected Map<String, String> _addHeaders() {
         Map<String, String> headers = new HashMap<String, String>();
-        // add headers like this
-        // headers.put("key", "value");
+        // add headers like this.
+        // ensures that the formatting is json.
+        headers.put("Content-Type", "application/json");
         return headers;
+    }
+
+    /**
+     * Adds the URL parameters to the path. You can convert Maps to List<NameValuePairs> using the APIUtils
+     * 
+     * @param path resource path
+     * @param params URL parameters
+     * @return path with the parameters appended at the end
+     */
+    protected String appendParameters(String path, List<NameValuePair> params) {
+        if (params == null || params.size() == 0) {
+            return path;
+        }
+        path += "?";
+        // go through the list, and append the items one-by-one
+        for (int i = 0; i < params.size(); ++i) {
+            NameValuePair pair = params.get(i);
+            path += pair.getName() + "=" + pair.getValue();
+            if (i != params.size() - 1) {
+                path += "&";
+            }
+        }
+        return path;
     }
 }

@@ -26,7 +26,7 @@ public class MainActivity extends Activity {
         // Create a new client for getting the persons
         PersonsClient personsClient = new PersonsClient(this, "http://imogen.surfnet.nl:8001/");
         // Retrieve the persons info
-        personsClient.getList(new ListHandler<Person>() {
+        personsClient.getList(null, new ListHandler<Person>() {
 
             @Override
             public void onComplete(List<Person> list) {

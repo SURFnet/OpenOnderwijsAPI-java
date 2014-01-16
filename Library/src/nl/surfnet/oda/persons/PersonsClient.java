@@ -6,6 +6,7 @@ import nl.surfnet.oda.APIClient;
 import nl.surfnet.oda.EntityHandler;
 import nl.surfnet.oda.ListHandler;
 
+import org.apache.http.NameValuePair;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
@@ -35,13 +36,15 @@ public class PersonsClient extends APIClient {
     }
 
     /**
-     * Returns a list of all persons.
+     * Returns a list of all persons. Use the "page" parameter to select a page.
      *
-     * @param listHandler The onComplete method is called with the result as parameter if everything went well. Otherwise onError will be called.
+     * @param listHandler The onComplete method is called with the result as parameter if everything went well. Otherwise onError will be called. If you don't
+     *            want to use a parameter, use null.
      */
-    public void getList(final ListHandler<Person> listHandler) {
-
-        get(PERSONS, new Response.Listener<JSONObject>() {
+    public void getList(List<NameValuePair> params, final ListHandler<Person> listHandler) {
+        // append the parameters to the path
+        String path = appendParameters(PERSONS, params);
+        get(path, new Response.Listener<JSONObject>() {
 
             @Override
             public void onResponse(JSONObject result) {
@@ -70,9 +73,9 @@ public class PersonsClient extends APIClient {
      * @param index Identifier of the Person
      * @param handler The onComplete method is called with the result as parameter if everything went well. Otherwise onError will be called.
      */
-    public void get(long index, final EntityHandler<Person> handler) {
+    public void get(long id, final EntityHandler<Person> handler) {
         // insert the index into the path
-        String path = String.format(PERSON, index);
+        String path = String.format(PERSON, id);
         get(path, new Response.Listener<JSONObject>() {
 
             @Override
