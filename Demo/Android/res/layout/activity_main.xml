@@ -9,9 +9,16 @@
     tools:context=".MainActivity" >
 
     <TextView
+        android:id="@+id/firstPerson"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@android:string/untitled" />
+    
+    <TextView
         android:id="@+id/numberOfPersons"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_below="@+id/firstPerson"
         android:text="@android:string/untitled" />
 
 </RelativeLayout>

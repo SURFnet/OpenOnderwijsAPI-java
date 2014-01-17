@@ -1,68 +1,85 @@
 package nl.surfnet.oda.persons;
 
+import java.lang.reflect.Type;
 import java.util.List;
 
-import nl.surfnet.oda.APIClient;
 import nl.surfnet.oda.EntityHandler;
 import nl.surfnet.oda.ListHandler;
+import retrofit.Callback;
+import retrofit.RestAdapter;
+import retrofit.RetrofitError;
+import retrofit.client.Response;
+import retrofit.converter.GsonConverter;
+import retrofit.http.GET;
+import retrofit.http.Path;
+import retrofit.http.Query;
 
-import org.apache.http.NameValuePair;
-import org.json.JSONArray;
-import org.json.JSONObject;
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
+import com.google.gson.reflect.TypeToken;
 
-import android.content.Context;
-
-import com.android.volley.Response;
-import com.android.volley.VolleyError;
-import com.fasterxml.jackson.core.type.TypeReference;
-import com.fasterxml.jackson.databind.ObjectMapper;
-
-public class PersonsClient extends APIClient {
-
-    private final static String PERSONS = "persons";
-    private final static String PERSON = "person/%d";
-
-    private ObjectMapper _mapper;
+/**
+ * A client for getting info about persons from the API
+ *
+ * @author Daniel Zolnai
+ *
+ */
+public class PersonsClient {
 
     /**
-     * Constructor
+     * Provides an interface to the Persons API using retrofit.
      *
-     * @param context Context of the application. Use an Activity, or Application.getApplicationContext()
-     * @param baseUrl Base URL of the API, like https://api.example.com/
+     * @author Daniel Zolnai
+     *
      */
-    public PersonsClient(Context context, String baseUrl) {
-        super(context, baseUrl);
-        _mapper = new ObjectMapper();
+    private interface PersonsAPIClient {
+
+        @GET("/persons")
+        public void getList(@Query("page") Integer page, @Query("format") String format, Callback<List<Person>> cb);
+
+        @GET("/persons/{id}")
+        public void get(@Path("id") int id, @Query("format") String format, Callback<Person> cb);
+    }
+
+    private final static String FORMAT = "json";
+
+    private PersonsAPIClient _personsAPI;
+
+
+    public PersonsClient(String baseUrl) {
+        //@formatter:off
+        // set the GSON converter. Add the deserializers for the list and the Person object
+        Type personListType = new TypeToken<List<Person>>() {}.getType();
+        Gson gson = new GsonBuilder()
+            .registerTypeAdapter(Person.class, new PersonDeserializer())
+            .registerTypeAdapter(personListType, new PersonsListDeserializer())
+            .create();
+
+        RestAdapter restAdapter = new RestAdapter.Builder()
+            .setServer(baseUrl)
+            .setConverter(new GsonConverter(gson))
+            .build();
+        //@formatter:on
+        _personsAPI = restAdapter.create(PersonsAPIClient.class);
     }
 
     /**
      * Returns a list of all persons. Use the "page" parameter to select a page.
      *
-     * @param listHandler The onComplete method is called with the result as parameter if everything went well. Otherwise onError will be called. If you don't
-     *            want to use a parameter, use null.
+     * @param page Page number. Use null if none.
+     * @param listHandler The onComplete method is called with the result as parameter if everything went well. Otherwise onError will be called.
      */
-    public void getList(List<NameValuePair> params, final ListHandler<Person> listHandler) {
-        // append the parameters to the path
-        String path = appendParameters(PERSONS, params);
-        get(path, new Response.Listener<JSONObject>() {
+    public void getList(Integer page, final ListHandler<Person> handler) {
+        _personsAPI.getList(page, FORMAT, new Callback<List<Person>>() {
 
             @Override
-            public void onResponse(JSONObject result) {
-                try {
-                    // Jackson Objectmapper converts the JSON to the Java objects
-                    JSONArray personsData = result.getJSONArray("data");
-                    List<Person> persons = _mapper.readValue(personsData.toString(), new TypeReference<List<Person>>() {
-                    });
-                    listHandler.onComplete(persons);
-                } catch (Exception e) {
-                    listHandler.onError(e);
-                }
+            public void success(List<Person> list, Response response) {
+                handler.onComplete(list);
             }
-        }, new Response.ErrorListener() {
 
             @Override
-            public void onErrorResponse(VolleyError error) {
-                listHandler.onError(error);
+            public void failure(RetrofitError error) {
+                handler.onError(error);
             }
         });
     }
@@ -70,31 +87,22 @@ public class PersonsClient extends APIClient {
     /**
      * Gets the person with the given index from the API
      *
-     * @param index Identifier of the Person
+     * @param id Identifier of the Person
      * @param handler The onComplete method is called with the result as parameter if everything went well. Otherwise onError will be called.
      */
-    public void get(long id, final EntityHandler<Person> handler) {
-        // insert the index into the path
-        String path = String.format(PERSON, id);
-        get(path, new Response.Listener<JSONObject>() {
+    public void get(int id, final EntityHandler<Person> handler) {
+        _personsAPI.get(id, FORMAT, new Callback<Person>() {
 
             @Override
-            public void onResponse(JSONObject result) {
-                try {
-                    // Jackson Objectmapper converts the JSON to the Java objects
-                    JSONArray personData = result.getJSONArray("data");
-                    Person person = _mapper.readValue(personData.toString(), Person.class);
-                    handler.onComplete(person);
-                } catch (Exception e) {
-                    handler.onError(e);
-                }
+            public void success(Person person, Response response) {
+                handler.onComplete(person);
             }
-        }, new Response.ErrorListener() {
 
             @Override
-            public void onErrorResponse(VolleyError error) {
+            public void failure(RetrofitError error) {
                 handler.onError(error);
             }
         });
     }
+
 }

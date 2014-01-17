@@ -1,15 +1,11 @@
 package nl.surfnet.oda.persons;
 
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-import com.fasterxml.jackson.annotation.JsonProperty;
-
 /**
- * A person. The unknown fields of the API are ignored, so slight changes in the API don't break the application.
- *
+ * Represents a person.
+ * 
  * @author Daniel Zolnai
- *
+ * 
  */
-@JsonIgnoreProperties(ignoreUnknown = true)
 public class Person {
 
     public String givenName;
@@ -26,11 +22,7 @@ public class Person {
     public String office;
     public String employeeID;
     public String studentID;
-
-    @JsonProperty("url")
     public String resourceUrl;
-
-    // More attributes will be added later.
 
     /**
      * Empty constructor. Needed for JSON - POJO conversion
