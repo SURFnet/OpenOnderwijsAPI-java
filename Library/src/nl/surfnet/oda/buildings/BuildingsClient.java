@@ -1,4 +1,4 @@
-package nl.surfnet.oda.persons;
+package nl.surfnet.oda.buildings;
 
 import java.lang.reflect.Type;
 import java.util.List;
@@ -19,41 +19,34 @@ import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.gson.reflect.TypeToken;
 
-/**
- * A client for getting info about persons from the API
- *
- * @author Daniel Zolnai
- *
- */
-public class PersonsClient {
+public class BuildingsClient {
 
     /**
-     * Provides an interface to the Persons API using retrofit.
+     * Provides an interface to the Buildings API using retrofit.
      *
      * @author Daniel Zolnai
      *
      */
-    private interface PersonsAPIClient {
+    private interface BuildingsAPIClient {
 
-        @GET("/persons")
-        public void getList(@Query("page") Integer page, @Query("format") String format, Callback<List<Person>> cb);
+        @GET("/buildings")
+        public void getList(@Query("page") Integer page, @Query("format") String format, Callback<List<Building>> cb);
 
-        @GET("/persons/{id}")
-        public void get(@Path("id") int id, @Query("format") String format, Callback<Person> cb);
+        @GET("/buildings/{id}")
+        public void get(@Path("id") String id, @Query("format") String format, Callback<Building> cb);
     }
 
     private final static String FORMAT = "json";
 
-    private PersonsAPIClient _personsAPI;
+    private BuildingsAPIClient _buildingsAPI;
 
-
-    public PersonsClient(String baseUrl) {
+    public BuildingsClient(String baseUrl) {
         //@formatter:off
         // set the GSON converter. Add the deserializers for the list and the Person object
-        Type personListType = new TypeToken<List<Person>>() {}.getType();
+        Type buildingsListType = new TypeToken<List<Building>>() {}.getType();
         Gson gson = new GsonBuilder()
-            .registerTypeAdapter(Person.class, new PersonDeserializer())
-            .registerTypeAdapter(personListType, new PersonsListDeserializer())
+            .registerTypeAdapter(Building.class, new BuildingDeserializer())
+            .registerTypeAdapter(buildingsListType, new BuildingsListDeserializer())
             .create();
 
         RestAdapter restAdapter = new RestAdapter.Builder()
@@ -61,20 +54,20 @@ public class PersonsClient {
             .setConverter(new GsonConverter(gson))
             .build();
         //@formatter:on
-        _personsAPI = restAdapter.create(PersonsAPIClient.class);
+        _buildingsAPI = restAdapter.create(BuildingsAPIClient.class);
     }
 
     /**
-     * Returns a list of all persons. Use the "page" parameter to select a page.
+     * Returns a list of all buildings. Use the "page" parameter to select a page.
      *
      * @param page Page number. Use null if none.
      * @param listHandler The 'success' method is called with the result as parameter if everything went well. Otherwise 'failure' will be called.
      */
-    public void getList(Integer page, final ListHandler<Person> handler) {
-        _personsAPI.getList(page, FORMAT, new Callback<List<Person>>() {
+    public void getList(Integer page, final ListHandler<Building> handler) {
+        _buildingsAPI.getList(page, FORMAT, new Callback<List<Building>>() {
 
             @Override
-            public void success(List<Person> list, Response response) {
+            public void success(List<Building> list, Response response) {
                 handler.success(list);
             }
 
@@ -88,15 +81,15 @@ public class PersonsClient {
     /**
      * Gets the person with the given index from the API
      *
-     * @param id Identifier of the Person
+     * @param id Identifier of the Building
      * @param handler The 'success' method is called with the result as parameter if everything went well. Otherwise 'failure' will be called.
      */
-    public void get(int id, final EntityHandler<Person> handler) {
-        _personsAPI.get(id, FORMAT, new Callback<Person>() {
+    public void get(String id, final EntityHandler<Building> handler) {
+        _buildingsAPI.get(id, FORMAT, new Callback<Building>() {
 
             @Override
-            public void success(Person person, Response response) {
-                handler.success(person);
+            public void success(Building building, Response response) {
+                handler.success(building);
             }
 
             @Override
@@ -105,5 +98,4 @@ public class PersonsClient {
             }
         });
     }
-
 }

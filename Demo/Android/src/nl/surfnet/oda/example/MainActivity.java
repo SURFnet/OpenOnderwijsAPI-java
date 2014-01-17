@@ -4,6 +4,7 @@ import java.util.List;
 
 import nl.surfnet.oda.EntityHandler;
 import nl.surfnet.oda.ListHandler;
+import nl.surfnet.oda.NetworkError;
 import nl.surfnet.oda.OnderwijsDataAPI;
 import nl.surfnet.oda.persons.Person;
 import android.app.Activity;
@@ -31,14 +32,15 @@ public class MainActivity extends Activity {
         apiClient.getPersonsClient().get(1, new EntityHandler<Person>() {
 
             @Override
-            public void onComplete(Person person) {
+            public void success(Person person) {
                 // display the name of the first person
-                firstPerson.setText("The first person is called: " + person.displayName);
+                firstPerson.setText("The first person is called: " + person.getDisplayName());
             }
 
             @Override
-            public void onError(Exception e) {
+            public void failure(NetworkError e) {
                 // if an error happened, inform the user
+                e.printStackTrace();
                 firstPerson.setText("Error in getting first person :-(");
             }
         });
@@ -46,14 +48,15 @@ public class MainActivity extends Activity {
         apiClient.getPersonsClient().getList(null, new ListHandler<Person>() {
 
             @Override
-            public void onComplete(List<Person> list) {
+            public void success(List<Person> list) {
                 // display the number of persons in the UI
                 numberOfPersons.setText("There are " + list.size() + " persons.");
             }
 
             @Override
-            public void onError(Exception e) {
+            public void failure(NetworkError e) {
                 // if an error happened, inform the user
+                e.printStackTrace();
                 numberOfPersons.setText("Error in listing persons :-(");
             }
         });

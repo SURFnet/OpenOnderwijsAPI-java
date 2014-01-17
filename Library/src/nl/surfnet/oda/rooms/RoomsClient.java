@@ -1,4 +1,4 @@
-package nl.surfnet.oda.persons;
+package nl.surfnet.oda.rooms;
 
 import java.lang.reflect.Type;
 import java.util.List;
@@ -25,35 +25,35 @@ import com.google.gson.reflect.TypeToken;
  * @author Daniel Zolnai
  *
  */
-public class PersonsClient {
+public class RoomsClient {
 
     /**
-     * Provides an interface to the Persons API using retrofit.
+     * Provides an interface to the Rooms API using retrofit.
      *
      * @author Daniel Zolnai
      *
      */
-    private interface PersonsAPIClient {
+    private interface RoomsAPIClient {
 
-        @GET("/persons")
-        public void getList(@Query("page") Integer page, @Query("format") String format, Callback<List<Person>> cb);
+        @GET("/rooms")
+        public void getList(@Query("page") Integer page, @Query("format") String format, Callback<List<Room>> cb);
 
-        @GET("/persons/{id}")
-        public void get(@Path("id") int id, @Query("format") String format, Callback<Person> cb);
+        @GET("/rooms/{id}")
+        public void get(@Path("id") String id, @Query("format") String format, Callback<Room> cb);
     }
 
     private final static String FORMAT = "json";
 
-    private PersonsAPIClient _personsAPI;
+    private RoomsAPIClient _roomsAPI;
 
 
-    public PersonsClient(String baseUrl) {
+    public RoomsClient(String baseUrl) {
         //@formatter:off
-        // set the GSON converter. Add the deserializers for the list and the Person object
-        Type personListType = new TypeToken<List<Person>>() {}.getType();
+        // set the GSON converter. Add the deserializers for the list and the Room object
+        Type roomListType = new TypeToken<List<Room>>() {}.getType();
         Gson gson = new GsonBuilder()
-            .registerTypeAdapter(Person.class, new PersonDeserializer())
-            .registerTypeAdapter(personListType, new PersonsListDeserializer())
+            .registerTypeAdapter(Room.class, new RoomDeserializer())
+            .registerTypeAdapter(roomListType, new RoomsListDeserializer())
             .create();
 
         RestAdapter restAdapter = new RestAdapter.Builder()
@@ -61,20 +61,20 @@ public class PersonsClient {
             .setConverter(new GsonConverter(gson))
             .build();
         //@formatter:on
-        _personsAPI = restAdapter.create(PersonsAPIClient.class);
+        _roomsAPI = restAdapter.create(RoomsAPIClient.class);
     }
 
     /**
-     * Returns a list of all persons. Use the "page" parameter to select a page.
+     * Returns a list of all rooms. Use the "page" parameter to select a page.
      *
      * @param page Page number. Use null if none.
      * @param listHandler The 'success' method is called with the result as parameter if everything went well. Otherwise 'failure' will be called.
      */
-    public void getList(Integer page, final ListHandler<Person> handler) {
-        _personsAPI.getList(page, FORMAT, new Callback<List<Person>>() {
+    public void getList(Integer page, final ListHandler<Room> handler) {
+        _roomsAPI.getList(page, FORMAT, new Callback<List<Room>>() {
 
             @Override
-            public void success(List<Person> list, Response response) {
+            public void success(List<Room> list, Response response) {
                 handler.success(list);
             }
 
@@ -88,14 +88,14 @@ public class PersonsClient {
     /**
      * Gets the person with the given index from the API
      *
-     * @param id Identifier of the Person
+     * @param id Identifier of the Room
      * @param handler The 'success' method is called with the result as parameter if everything went well. Otherwise 'failure' will be called.
      */
-    public void get(int id, final EntityHandler<Person> handler) {
-        _personsAPI.get(id, FORMAT, new Callback<Person>() {
+    public void get(String id, final EntityHandler<Room> handler) {
+        _roomsAPI.get(id, FORMAT, new Callback<Room>() {
 
             @Override
-            public void success(Person person, Response response) {
+            public void success(Room person, Response response) {
                 handler.success(person);
             }
 

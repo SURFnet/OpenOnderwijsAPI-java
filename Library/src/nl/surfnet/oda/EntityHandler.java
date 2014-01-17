@@ -3,9 +3,9 @@ package nl.surfnet.oda;
 
 /**
  * Provides a generic class for all API methods which return an instance of an object.
- * 
+ *
  * @author Daniel Zolnai
- * 
+ *
  * @param <T> Type of the object. For example, Person
  */
 public abstract class EntityHandler<T> {
@@ -15,12 +15,12 @@ public abstract class EntityHandler<T> {
      *
      * @param result The result object
      */
-    public abstract void onComplete(T result);
+    public abstract void success(T result);
 
     /**
      * If there was an error, call this with the exception
-     * 
-     * @param e Exception containing the details of the error.
+     *
+     * @param e NetworkError object containing the details of the error.
      */
-    public abstract void onError(Exception e);
+    public abstract void failure(NetworkError e);
 }

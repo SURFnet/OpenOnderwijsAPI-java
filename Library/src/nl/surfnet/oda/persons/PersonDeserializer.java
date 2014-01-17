@@ -20,27 +20,27 @@ public class PersonDeserializer implements JsonDeserializer<Person> {
     public Person deserialize(JsonElement json, Type typeOfT, JsonDeserializationContext context) throws JsonParseException {
         final Person person = new Person();
         final JsonObject data = json.getAsJsonObject();
-        person.department = _getAsStringNoNull(data.get("department"));
-        person.displayName = _getAsStringNoNull(data.get("displayName"));
-        person.employeeID = _getAsStringNoNull(data.get("employeeID"));
-        person.gender = _getAsStringNoNull(data.get("gender"));
-        person.givenName = _getAsStringNoNull(data.get("givenName"));
-        person.mail = _getAsStringNoNull(data.get("mail"));
-        person.mobileNumber = _getAsStringNoNull(data.get("mobileNumber"));
-        person.office = _getAsStringNoNull(data.get("office"));
-        person.organisation = _getAsStringNoNull(data.get("organisation"));
-        person.photo = _getAsStringNoNull(data.get("photo"));
-        person.resourceUrl = _getAsStringNoNull(data.get("url"));
-        person.studentID = _getAsStringNoNull(data.get("studentID"));
-        person.surName = _getAsStringNoNull(data.get("surName"));
-        person.telephoneNumber = _getAsStringNoNull(data.get("telephoneNumber"));
-        person.title = _getAsStringNoNull(data.get("title"));
+        person.setDepartment(_getAsStringNoNull(data.get("department")));
+        person.setDisplayName(_getAsStringNoNull(data.get("displayName")));
+        person.setEmployeeID(_getAsStringNoNull(data.get("employeeID")));
+        person.setGender(_getAsStringNoNull(data.get("gender")));
+        person.setGivenName(_getAsStringNoNull(data.get("givenName")));
+        person.setMail(_getAsStringNoNull(data.get("mail")));
+        person.setMobileNumber(_getAsStringNoNull(data.get("mobileNumber")));
+        person.setOffice(_getAsStringNoNull(data.get("office")));
+        person.setOrganisation(_getAsStringNoNull(data.get("organisation")));
+        person.setPhoto(_getAsStringNoNull(data.get("photo")));
+        person.setResourceUrl(_getAsStringNoNull(data.get("url")));
+        person.setStudentID(_getAsStringNoNull(data.get("studentID")));
+        person.setSurName(_getAsStringNoNull(data.get("surName")));
+        person.setTelephoneNumber(_getAsStringNoNull(data.get("telephoneNumber")));
+        person.setTitle(_getAsStringNoNull(data.get("title")));
         return person;
     }
 
     /**
      * GSON throws an error if a field is null and we try to convert it to a String. This method handles that.
-     * 
+     *
      * @param element JSONElement which might be null
      * @return null if the element is null, otherwise the value as a string
      */
