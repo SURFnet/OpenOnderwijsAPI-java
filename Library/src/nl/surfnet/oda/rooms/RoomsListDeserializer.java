@@ -12,10 +12,10 @@ import com.google.gson.JsonObject;
 import com.google.gson.JsonParseException;
 
 /**
- * Deserializes a list of persons. Reuses the person deserializer.
- *
+ * Deserializes a list of rooms. Reuses the room deserializer.
+ * 
  * @author Daniel Zolnai
- *
+ * 
  */
 public class RoomsListDeserializer implements JsonDeserializer<List<Room>> {
 

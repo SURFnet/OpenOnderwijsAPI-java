@@ -12,10 +12,10 @@ import com.google.gson.JsonObject;
 import com.google.gson.JsonParseException;
 
 /**
- * Deserializes a list of persons. Reuses the person deserializer.
- *
+ * Deserializes a list of buildings. Reuses the Building deserializer.
+ * 
  * @author Daniel Zolnai
- *
+ * 
  */
 public class BuildingsListDeserializer implements JsonDeserializer<List<Building>> {
 

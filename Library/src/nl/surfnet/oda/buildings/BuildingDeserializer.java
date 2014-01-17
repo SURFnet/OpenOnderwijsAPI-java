@@ -9,10 +9,10 @@ import com.google.gson.JsonObject;
 import com.google.gson.JsonParseException;
 
 /**
- * Deserializes a GSON to a Person object
- *
+ * Deserializes a GSON to a Building object
+ * 
  * @author Daniel Zolnai
- *
+ * 
  */
 public class BuildingDeserializer implements JsonDeserializer<Building> {
 
