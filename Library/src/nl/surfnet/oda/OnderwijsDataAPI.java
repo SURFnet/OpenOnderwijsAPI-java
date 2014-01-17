@@ -4,8 +4,6 @@ import nl.surfnet.oda.buildings.BuildingsClient;
 import nl.surfnet.oda.persons.PersonsClient;
 import nl.surfnet.oda.rooms.RoomsClient;
 
-
-
 /**
  * Base class for communication with the OnderwijsDataAPI. Use the getter methods for getting the different clients.
  *

@@ -9,6 +9,12 @@ import java.util.Map;
 import retrofit.RetrofitError;
 import retrofit.client.Header;
 
+/**
+ * Encapsulates a RetrofitError, and converts it's data to more readable formats.
+ *
+ * @author Daniel Zolnai
+ *
+ */
 public class NetworkError {
 
     private RetrofitError _error;
@@ -37,9 +43,9 @@ public class NetworkError {
 
     /**
      * Get the body of the response
-     * 
+     *
      * It is the responsibility of the caller to close the stream. This method may only be called once.
-     * 
+     *
      * @return the body as an InputStream
      * @throws IOException
      */
@@ -83,6 +89,7 @@ public class NetworkError {
         if (headers == null) {
             return map;
         }
+        // convert each header to a key - value pair, and add it to the map
         for (Header header : headers) {
             map.put(header.getName(), header.getValue());
         }
