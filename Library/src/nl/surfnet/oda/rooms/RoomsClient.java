@@ -4,6 +4,7 @@ import java.lang.reflect.Type;
 import java.util.List;
 
 import nl.surfnet.oda.EntityHandler;
+import nl.surfnet.oda.ListDeserializer;
 import nl.surfnet.oda.ListHandler;
 import nl.surfnet.oda.NetworkError;
 import retrofit.Callback;
@@ -20,7 +21,7 @@ import com.google.gson.GsonBuilder;
 import com.google.gson.reflect.TypeToken;
 
 /**
- * A client for getting info about persons from the API
+ * A client for getting info about rooms from the API
  *
  * @author Daniel Zolnai
  *
@@ -53,7 +54,7 @@ public class RoomsClient {
         Type roomListType = new TypeToken<List<Room>>() {}.getType();
         Gson gson = new GsonBuilder()
             .registerTypeAdapter(Room.class, new RoomDeserializer())
-            .registerTypeAdapter(roomListType, new RoomsListDeserializer())
+            .registerTypeAdapter(roomListType, new ListDeserializer<Room>(new RoomDeserializer()))
             .create();
 
         RestAdapter restAdapter = new RestAdapter.Builder()
@@ -95,8 +96,8 @@ public class RoomsClient {
         _roomsAPI.get(id, FORMAT, new Callback<Room>() {
 
             @Override
-            public void success(Room person, Response response) {
-                handler.success(person);
+            public void success(Room room, Response response) {
+                handler.success(room);
             }
 
             @Override

@@ -29,7 +29,7 @@ public class MainActivity extends Activity {
         OnderwijsDataAPI apiClient = new OnderwijsDataAPI("http://surfnetapi.pagekite.me/");
         // Retrieve the persons info using the PersonsClient
 
-        apiClient.getPersonsClient().get(1, new EntityHandler<Person>() {
+        apiClient.getPersonsClient().get("1", new EntityHandler<Person>() {
 
             @Override
             public void success(Person person) {

@@ -4,6 +4,7 @@ import java.lang.reflect.Type;
 import java.util.List;
 
 import nl.surfnet.oda.EntityHandler;
+import nl.surfnet.oda.ListDeserializer;
 import nl.surfnet.oda.ListHandler;
 import nl.surfnet.oda.NetworkError;
 import retrofit.Callback;
@@ -46,7 +47,7 @@ public class BuildingsClient {
         Type buildingsListType = new TypeToken<List<Building>>() {}.getType();
         Gson gson = new GsonBuilder()
             .registerTypeAdapter(Building.class, new BuildingDeserializer())
-            .registerTypeAdapter(buildingsListType, new BuildingsListDeserializer())
+            .registerTypeAdapter(buildingsListType, new ListDeserializer<Building>(new BuildingDeserializer()))
             .create();
 
         RestAdapter restAdapter = new RestAdapter.Builder()

@@ -1,11 +1,13 @@
 package nl.surfnet.oda.rooms;
 
+
 /**
  * Represents a room.
  *
  * @author Daniel Zolnai
  *
  */
+
 public class Room {
 
     private String _building;

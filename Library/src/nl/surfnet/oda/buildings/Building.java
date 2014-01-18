@@ -1,5 +1,6 @@
 package nl.surfnet.oda.buildings;
 
+
 /**
  * Represents a building.
  *

@@ -4,6 +4,7 @@ import java.lang.reflect.Type;
 import java.util.List;
 
 import nl.surfnet.oda.EntityHandler;
+import nl.surfnet.oda.ListDeserializer;
 import nl.surfnet.oda.ListHandler;
 import nl.surfnet.oda.NetworkError;
 import retrofit.Callback;
@@ -39,7 +40,7 @@ public class PersonsClient {
         public void getList(@Query("page") Integer page, @Query("format") String format, Callback<List<Person>> cb);
 
         @GET("/persons/{id}")
-        public void get(@Path("id") int id, @Query("format") String format, Callback<Person> cb);
+        public void get(@Path("id") String id, @Query("format") String format, Callback<Person> cb);
     }
 
     private final static String FORMAT = "json";
@@ -53,7 +54,7 @@ public class PersonsClient {
         Type personListType = new TypeToken<List<Person>>() {}.getType();
         Gson gson = new GsonBuilder()
             .registerTypeAdapter(Person.class, new PersonDeserializer())
-            .registerTypeAdapter(personListType, new PersonsListDeserializer())
+            .registerTypeAdapter(personListType, new ListDeserializer<Person>(new PersonDeserializer()))
             .create();
 
         RestAdapter restAdapter = new RestAdapter.Builder()
@@ -91,7 +92,7 @@ public class PersonsClient {
      * @param id Identifier of the Person
      * @param handler The 'success' method is called with the result as parameter if everything went well. Otherwise 'failure' will be called.
      */
-    public void get(int id, final EntityHandler<Person> handler) {
+    public void get(String id, final EntityHandler<Person> handler) {
         _personsAPI.get(id, FORMAT, new Callback<Person>() {
 
             @Override
