@@ -13,10 +13,10 @@ import com.google.gson.JsonObject;
 import com.google.gson.JsonParseException;
 
 /**
- * Deserializers a JSON to a Group object
- * 
+ * Deserializes a JSON to a Group object
+ *
  * @author Daniel Zolnai
- * 
+ *
  */
 public class GroupDeserializer extends EntityDeserializer<Group> {
 

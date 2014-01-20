@@ -57,8 +57,8 @@ public class PersonsClient extends AbstractAPIClient<Person> {
 
     /**
      * Returns a list of all persons. Use the "page" parameter to select a page.
-     *
-     * @param page Page number. Use null if none.
+     * 
+     * @param params Parameters of the query. Use null if none
      * @param listHandler The 'success' method is called with the result as parameter if everything went well. Otherwise 'failure' will be called.
      */
     @Override
@@ -78,7 +78,7 @@ public class PersonsClient extends AbstractAPIClient<Person> {
     }
 
     /**
-     * Gets the person with the given index from the API
+     * Gets the person with the given ID from the API
      *
      * @param id Identifier of the Person
      * @param handler The 'success' method is called with the result as parameter if everything went well. Otherwise 'failure' will be called.

@@ -7,6 +7,7 @@ import nl.surfnet.oda.EntityHandler;
 import nl.surfnet.oda.ListHandler;
 import nl.surfnet.oda.NetworkError;
 import nl.surfnet.oda.OnderwijsDataAPI;
+import nl.surfnet.oda.affiliations.Affiliation;
 import nl.surfnet.oda.buildings.Building;
 import nl.surfnet.oda.groups.Group;
 import nl.surfnet.oda.persons.Person;
@@ -76,8 +77,8 @@ public class MainActivity extends Activity {
         /**
          * BUILDINGS
          */
-        final TextView AEGBBuilding = (TextView) findViewById(R.id.AEGBBuilding);
-        final TextView numberOfBuildings = (TextView) findViewById(R.id.numberOfBuildings);
+        final TextView AEGBBuilding = (TextView)findViewById(R.id.AEGBBuilding);
+        final TextView numberOfBuildings = (TextView)findViewById(R.id.numberOfBuildings);
         // get the building with the ID 'AEGB'
         apiClient.getBuildingsClient().get("AEGB", null, new EntityHandler<Building>() {
 
@@ -100,13 +101,13 @@ public class MainActivity extends Activity {
 
             @Override
             public void success(List<Building> list) {
-                //display the result
+                // display the result
                 numberOfBuildings.setText("There are " + list.size() + " buildings on the first page.");
             }
 
             @Override
             public void failure(NetworkError e) {
-                //inform the user that en error happened.
+                // inform the user that en error happened.
                 numberOfBuildings.setText("Error in listing first page of buildings :-(");
                 e.printStackTrace();
             }
@@ -162,7 +163,7 @@ public class MainActivity extends Activity {
 
             @Override
             public void success(Group group) {
-                //display the result
+                // display the result
                 firstGroupMembers.setText("The group with the id '1' has " + group.getMembers().size() + " member(s), and its name is '" + group.getName() + "'.");
             }
 
@@ -173,7 +174,7 @@ public class MainActivity extends Activity {
                 e.printStackTrace();
             }
         });
-        //you can also do inline params:
+        // you can also do inline params:
         apiClient.getGroupsClient().getList(new Params().setPage(1), new ListHandler<Group>() {
 
             @Override
@@ -186,6 +187,44 @@ public class MainActivity extends Activity {
             public void failure(NetworkError e) {
                 // inform the user that an error happened
                 numberOfGroups.setText("Error in listing first page of groups :-(");
+                e.printStackTrace();
+            }
+        });
+
+        /**
+         * AFFILIATIONS
+         */
+        final TextView secondAffiliationPersons = (TextView)findViewById(R.id.secondAffiliationPersons);
+        final TextView numberOfAffiliations = (TextView)findViewById(R.id.numberOfAffiliations);
+        // get the info about the affiliation with the id '1'
+        apiClient.getAffiliationsClient().get("2", null, new EntityHandler<Affiliation>() {
+
+            @Override
+            public void success(Affiliation affiliation) {
+                // display the result
+                secondAffiliationPersons.setText("The second affiliation has " + affiliation.getPersonUrls().size() + " persons.");
+            }
+
+            @Override
+            public void failure(NetworkError e) {
+                // inform the user that an error happened
+                secondAffiliationPersons.setText("Error getting info about the first affiliation :-(");
+                e.printStackTrace();
+            }
+        });
+        // get the number of the affiliations on the first page
+        apiClient.getAffiliationsClient().getList(new Params().setPage(1), new ListHandler<Affiliation>() {
+
+            @Override
+            public void success(List<Affiliation> list) {
+                // display the result
+                numberOfAffiliations.setText("There are " + list.size() + " affiliations on the first page.");
+            }
+
+            @Override
+            public void failure(NetworkError e) {
+                // inform the user that an error happened
+                numberOfAffiliations.setText("Error in listing first page of affiliations :-(");
                 e.printStackTrace();
             }
         });

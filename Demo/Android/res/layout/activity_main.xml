@@ -63,4 +63,18 @@
         android:layout_below="@+id/firstGroupMembers"
         android:text="@android:string/untitled" />
 
+    <TextView
+        android:id="@+id/secondAffiliationPersons"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/numberOfGroups"
+        android:text="@android:string/untitled" />
+
+    <TextView
+        android:id="@+id/numberOfAffiliations"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/secondAffiliationPersons"
+        android:text="@android:string/untitled" />
+
 </RelativeLayout>

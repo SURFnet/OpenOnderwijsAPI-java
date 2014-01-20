@@ -1,5 +1,6 @@
 package nl.surfnet.oda;
 
+import nl.surfnet.oda.affiliations.AffiliationsClient;
 import nl.surfnet.oda.buildings.BuildingsClient;
 import nl.surfnet.oda.groups.GroupsClient;
 import nl.surfnet.oda.persons.PersonsClient;
@@ -19,6 +20,7 @@ public class OnderwijsDataAPI {
     private BuildingsClient _buildingsClient;
     private RoomsClient _roomsClient;
     private GroupsClient _groupsClient;
+    private AffiliationsClient _affiliationsClient;
 
     /**
      * Basic constructor
@@ -47,7 +49,7 @@ public class OnderwijsDataAPI {
      * @return The client handling buildings data
      */
     public BuildingsClient getBuildingsClient() {
-        if (_buildingsClient == null){
+        if (_buildingsClient == null) {
             _buildingsClient = new BuildingsClient(_baseUrl);
         }
         return _buildingsClient;
@@ -75,6 +77,18 @@ public class OnderwijsDataAPI {
             _groupsClient = new GroupsClient(_baseUrl);
         }
         return _groupsClient;
+    }
+
+    /**
+     * Returns the client which is responsible for the handling of affiliations data.
+     * 
+     * @return The client handling affiliations data.
+     */
+    public AffiliationsClient getAffiliationsClient() {
+        if (_affiliationsClient == null) {
+            _affiliationsClient = new AffiliationsClient(_baseUrl);
+        }
+        return _affiliationsClient;
     }
 
 }
