@@ -32,15 +32,19 @@ public class GroupDeserializer extends EntityDeserializer<Group> {
         group.setName(getAsStringNoNull(groupJson.get("name")));
         group.setResourceUrl(getAsStringNoNull(groupJson.get("url")));
         group.setType(getAsStringNoNull(groupJson.get("type")));
-        // get the members of the group
-        JsonArray membersJson = groupJson.get("members").getAsJsonArray();
-        List<GroupMember> members = new ArrayList<GroupMember>();
-        GroupMemberDeserializer memberDeserializer = new GroupMemberDeserializer();
-        for (int i = 0; i < membersJson.size(); ++i) {
-            GroupMember member = memberDeserializer.deserialize(membersJson.get(i), typeOfT, context);
-            members.add(member);
+        // get the members of the group, if there are any
+        if (groupJson.has("members")) {
+            JsonArray membersJson = groupJson.get("members").getAsJsonArray();
+            List<GroupMember> members = new ArrayList<GroupMember>();
+            GroupMemberDeserializer memberDeserializer = new GroupMemberDeserializer();
+            for (int i = 0; i < membersJson.size(); ++i) {
+                GroupMember member = memberDeserializer.deserialize(membersJson.get(i), typeOfT, context);
+                members.add(member);
+            }
+            group.setMembers(members);
+        } else {
+            group.setMembers(null);
         }
-        group.setMembers(members);
         return group;
     }
 

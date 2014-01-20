@@ -4,15 +4,21 @@ import java.util.List;
 
 /**
  * Represents an affiliation.
- * 
+ *
  * @author Daniel Zolnai
- * 
+ *
  */
 public class Affiliation {
 
     private List<String> _personUrls;
     private String _resourceUrl;
     private String _affiliation;
+
+    /**
+     * Empty constructor needed for conversion.
+     */
+    public Affiliation() {
+    }
 
     public List<String> getPersonUrls() {
         return _personUrls;

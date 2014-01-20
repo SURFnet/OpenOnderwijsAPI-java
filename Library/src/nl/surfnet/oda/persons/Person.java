@@ -1,5 +1,9 @@
 package nl.surfnet.oda.persons;
 
+import java.util.List;
+
+import nl.surfnet.oda.groups.Group;
+
 /**
  * Represents a person.
  *
@@ -23,6 +27,8 @@ public class Person {
     private String _employeeID;
     private String _studentID;
     private String _resourceUrl;
+    private List<String> _affiliations;
+    private List<Group> _groups;
 
     /**
      * Empty constructor. Needed for JSON - POJO conversion
@@ -148,5 +154,21 @@ public class Person {
 
     public void setResourceUrl(String resourceUrl) {
         _resourceUrl = resourceUrl;
+    }
+
+    public List<String> getAffiliations() {
+        return _affiliations;
+    }
+
+    public void setAffiliations(List<String> affiliations) {
+        _affiliations = affiliations;
+    }
+
+    public List<Group> getGroups() {
+        return _groups;
+    }
+
+    public void setGroups(List<Group> groups) {
+        _groups = groups;
     }
 }
