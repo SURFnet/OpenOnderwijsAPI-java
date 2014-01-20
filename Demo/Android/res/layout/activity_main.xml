@@ -13,12 +13,40 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@android:string/untitled" />
-    
+
     <TextView
         android:id="@+id/numberOfPersons"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_below="@+id/firstPerson"
+        android:text="@android:string/untitled" />
+
+    <TextView
+        android:id="@+id/AEGBBuilding"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/numberOfPersons"
+        android:text="@android:string/untitled" />
+
+    <TextView
+        android:id="@+id/numberOfBuildings"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/AEGBBuilding"
+        android:text="@android:string/untitled" />
+
+    <TextView
+        android:id="@+id/firstRoom"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/numberOfBuildings"
+        android:text="@android:string/untitled" />
+
+    <TextView
+        android:id="@+id/numberOfRooms"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/firstRoom"
         android:text="@android:string/untitled" />
 
 </RelativeLayout>
