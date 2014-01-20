@@ -8,8 +8,6 @@ import retrofit.converter.GsonConverter;
 
 public abstract class AbstractAPIClient<T> {
 
-    private static final String FORMAT = "json";
-
     public static class Params extends HashMap<String, String> {
 
         // serialversion UID for serialization.
@@ -17,20 +15,13 @@ public abstract class AbstractAPIClient<T> {
 
         /**
          * Sets the page number for the listing. Use only with getList methods.
-         *
+         * 
          * @param pageNumber Number of the page
+         * @return the instance of the actual Params object, allows inline creation and modification
          */
-        public void addPage(Integer pageNumber) {
+        public Params setPage(Integer pageNumber) {
             put("page", pageNumber.toString());
-        }
-
-        /**
-         * Sets the data format of the output.
-         *
-         * @param format Output format: json, xml, yaml, ...
-         */
-        public void addFormat(String format) {
-            put("format", format);
+            return this;
         }
 
         // add additional parameters here
@@ -92,7 +83,7 @@ public abstract class AbstractAPIClient<T> {
             params = new Params();
         }
         // the format should be always json.
-        params.addFormat(FORMAT);
+        params.put("format", "json");
         // add additional parameters here, which you want to add to each query
         return params;
     }

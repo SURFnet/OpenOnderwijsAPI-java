@@ -21,7 +21,7 @@ public class RoomDeserializer extends EntityDeserializer<Room> {
     public Room deserialize(JsonElement json, Type typeOfT, JsonDeserializationContext context) throws JsonParseException {
         final Room room = new Room();
         final JsonObject data = json.getAsJsonObject();
-        room.setBuilding(getAsStringNoNull(data.get("building")));
+        room.setBuildingUrl(getAsStringNoNull(data.get("building")));
         room.setDescription(getAsStringNoNull(data.get("description")));
         room.setName(getAsStringNoNull(data.get("name")));
         room.setTotalSeats(getAsIntegerNoNull(data.get("totalSeats")));

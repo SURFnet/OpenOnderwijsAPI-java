@@ -1,4 +1,4 @@
-package nl.surfnet.oda.persons;
+package nl.surfnet.oda.newfeeds;
 
 import java.lang.reflect.Type;
 import java.util.List;
@@ -21,52 +21,50 @@ import com.google.gson.GsonBuilder;
 import com.google.gson.reflect.TypeToken;
 
 /**
- * A client for getting info about persons from the API
- *
+ * A client for getting info about news feeds from the API
+ * 
  * @author Daniel Zolnai
- *
+ * 
  */
-public class PersonsClient extends AbstractAPIClient<Person> {
-
+public class NewsFeedsClient extends AbstractAPIClient<NewsFeed> {
     /**
-     * Provides an interface to the Persons API using retrofit.
+     * Provides an interface to the NewsFeeds API using retrofit.
      *
      * @author Daniel Zolnai
      *
      */
-    private interface PersonsAPIClient {
+    private interface NewsFeedsAPIClient {
 
-        @GET("/persons{params}")
-        public void getList(@EncodedPath("params") String params, Callback<List<Person>> cb);
+        @GET("/newsfeeds{params}")
+        public void getList(@EncodedPath("params") String params, Callback<List<NewsFeed>> cb);
 
-        @GET("/persons/{id}{params}")
-        public void get(@Path("id") String id, @EncodedPath("params") String params, Callback<Person> cb);
+        @GET("/newsfeeds/{id}{params}")
+        public void get(@Path("id") String id, @EncodedPath("params") String params, Callback<NewsFeed> cb);
     }
 
-    private PersonsAPIClient _personsAPI;
-
+    private NewsFeedsAPIClient _apiClient;
 
     /**
      * Constructor. Creates a new interface for the communication with the API using a Retrofit RestAdapter
      *
      * @param baseUrl
      */
-    public PersonsClient(String baseUrl) {
-        _personsAPI = getRestAdapter(baseUrl).create(PersonsAPIClient.class);
+    public NewsFeedsClient(String baseUrl) {
+        _apiClient = getRestAdapter(baseUrl).create(NewsFeedsAPIClient.class);
     }
 
     /**
-     * Returns a list of all persons. Use the "page" parameter to select a page.
-     * 
+     * Returns a list of all newsfeeds. Use the "page" parameter to select a page.
+     *
      * @param params Parameters of the query. Use null if none
      * @param listHandler The 'success' method is called with the result as parameter if everything went well. Otherwise 'failure' will be called.
      */
     @Override
-    public void getList(Params params, final ListHandler<Person> handler) {
-        _personsAPI.getList(parametersToString(params), new Callback<List<Person>>() {
+    public void getList(Params params, final ListHandler<NewsFeed> handler) {
+        _apiClient.getList(parametersToString(params), new Callback<List<NewsFeed>>() {
 
             @Override
-            public void success(List<Person> list, Response response) {
+            public void success(List<NewsFeed> list, Response response) {
                 handler.success(list);
             }
 
@@ -78,18 +76,18 @@ public class PersonsClient extends AbstractAPIClient<Person> {
     }
 
     /**
-     * Gets the person with the given ID from the API
+     * Gets the newsFeed with the given ID from the API
      *
-     * @param id Identifier of the Person
+     * @param id Identifier of the NewsFeed
      * @param handler The 'success' method is called with the result as parameter if everything went well. Otherwise 'failure' will be called.
      */
     @Override
-    public void get(String id, Params params, final EntityHandler<Person> handler) {
-        _personsAPI.get(id, parametersToString(params), new Callback<Person>() {
+    public void get(String id, Params params, final EntityHandler<NewsFeed> handler) {
+        _apiClient.get(id, parametersToString(params), new Callback<NewsFeed>() {
 
             @Override
-            public void success(Person person, Response response) {
-                handler.success(person);
+            public void success(NewsFeed newsFeed, Response response) {
+                handler.success(newsFeed);
             }
 
             @Override
@@ -105,12 +103,13 @@ public class PersonsClient extends AbstractAPIClient<Person> {
     @Override
     protected GsonConverter getGsonConverter() {
         //@formatter:off
-        Type personListType = new TypeToken<List<Person>>() {}.getType();
+        Type newsFeedListType = new TypeToken<List<NewsFeed>>() {}.getType();
         Gson gson = new GsonBuilder()
-        .registerTypeAdapter(Person.class, new PersonDeserializer())
-        .registerTypeAdapter(personListType, new ListDeserializer<Person>(new PersonDeserializer()))
+        .registerTypeAdapter(NewsFeed.class, new NewsFeedDeserializer())
+        .registerTypeAdapter(newsFeedListType, new ListDeserializer<NewsFeed>(new NewsFeedDeserializer()))
         .create();
         return new GsonConverter(gson);
         //@formatter:on
     }
+
 }

@@ -17,11 +17,11 @@ public class Room {
     private Integer _totalWorkspaces;
     private Integer _availableWorkspaces;
 
-    public String getBuilding() {
+    public String getBuildingUrl() {
         return _building;
     }
 
-    public void setBuilding(String building) {
+    public void setBuildingUrl(String building) {
         _building = building;
     }
 

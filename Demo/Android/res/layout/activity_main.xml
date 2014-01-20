@@ -13,12 +13,110 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@android:string/untitled" />
-    
+
     <TextView
         android:id="@+id/numberOfPersons"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_below="@+id/firstPerson"
+        android:text="@android:string/untitled" />
+
+    <TextView
+        android:id="@+id/AEGBBuilding"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/numberOfPersons"
+        android:text="@android:string/untitled" />
+
+    <TextView
+        android:id="@+id/numberOfBuildings"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/AEGBBuilding"
+        android:text="@android:string/untitled" />
+
+    <TextView
+        android:id="@+id/firstRoom"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/numberOfBuildings"
+        android:text="@android:string/untitled" />
+
+    <TextView
+        android:id="@+id/numberOfRooms"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/firstRoom"
+        android:text="@android:string/untitled" />
+
+    <TextView
+        android:id="@+id/firstGroupMembers"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/numberOfRooms"
+        android:text="@android:string/untitled" />
+
+    <TextView
+        android:id="@+id/numberOfGroups"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/firstGroupMembers"
+        android:text="@android:string/untitled" />
+
+    <TextView
+        android:id="@+id/secondAffiliationPersons"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/numberOfGroups"
+        android:text="@android:string/untitled" />
+
+    <TextView
+        android:id="@+id/numberOfAffiliations"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/secondAffiliationPersons"
+        android:text="@android:string/untitled" />
+
+    <TextView
+        android:id="@+id/firstNewsItem"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/numberOfAffiliations"
+        android:text="@android:string/untitled" />
+
+    <TextView
+        android:id="@+id/numberOfNewsItems"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/firstNewsItem"
+        android:text="@android:string/untitled" />
+
+    <TextView
+        android:id="@+id/firstNewsFeed"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/numberOfNewsItems"
+        android:text="@android:string/untitled" />
+
+    <TextView
+        android:id="@+id/numberOfNewsFeeds"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/firstNewsFeed"
+        android:text="@android:string/untitled" />
+
+    <TextView
+        android:id="@+id/firstRoleName"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/numberOfNewsFeeds"
+        android:text="@android:string/untitled" />
+
+    <TextView
+        android:id="@+id/numberOfRoles"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/firstRoleName"
         android:text="@android:string/untitled" />
 
 </RelativeLayout>
