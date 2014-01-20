@@ -77,4 +77,46 @@
         android:layout_below="@+id/secondAffiliationPersons"
         android:text="@android:string/untitled" />
 
+    <TextView
+        android:id="@+id/firstNewsItem"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/numberOfAffiliations"
+        android:text="@android:string/untitled" />
+
+    <TextView
+        android:id="@+id/numberOfNewsItems"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/firstNewsItem"
+        android:text="@android:string/untitled" />
+
+    <TextView
+        android:id="@+id/firstNewsFeed"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/numberOfNewsItems"
+        android:text="@android:string/untitled" />
+
+    <TextView
+        android:id="@+id/numberOfNewsFeeds"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/firstNewsFeed"
+        android:text="@android:string/untitled" />
+
+    <TextView
+        android:id="@+id/firstRoleName"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/numberOfNewsFeeds"
+        android:text="@android:string/untitled" />
+
+    <TextView
+        android:id="@+id/numberOfRoles"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/firstRoleName"
+        android:text="@android:string/untitled" />
+
 </RelativeLayout>

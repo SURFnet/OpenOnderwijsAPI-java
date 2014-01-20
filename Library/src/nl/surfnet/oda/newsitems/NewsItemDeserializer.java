@@ -1,6 +1,7 @@
 package nl.surfnet.oda.newsitems;
 
 import java.lang.reflect.Type;
+import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -15,9 +16,9 @@ import com.google.gson.JsonParseException;
 
 /**
  * Deserializes a JSON to a NewsItem
- * 
+ *
  * @author Daniel Zolnai
- * 
+ *
  */
 public class NewsItemDeserializer extends EntityDeserializer<NewsItem> {
 
@@ -39,9 +40,13 @@ public class NewsItemDeserializer extends EntityDeserializer<NewsItem> {
         if (date == null) {
             newsItem.setPublicationDate(null);
         } else {
-            // JAXB can convert ISO8601 dates:
-            Date pubDate = javax.xml.bind.DatatypeConverter.parseDateTime(date).getTime();
+            // convert the date
+            try {
+            Date pubDate = ISO8601.toCalendar(date).getTime();
             newsItem.setPublicationDate(pubDate);
+            } catch (ParseException e) {
+                newsItem.setPublicationDate(null);
+            }
         }
         // get the news feed urls
         JsonArray jsonFeedUrls = newsItemJson.get("feeds").getAsJsonArray();
