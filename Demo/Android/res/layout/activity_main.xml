@@ -49,4 +49,18 @@
         android:layout_below="@+id/firstRoom"
         android:text="@android:string/untitled" />
 
+    <TextView
+        android:id="@+id/firstGroupMembers"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/numberOfRooms"
+        android:text="@android:string/untitled" />
+
+    <TextView
+        android:id="@+id/numberOfGroups"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/firstGroupMembers"
+        android:text="@android:string/untitled" />
+
 </RelativeLayout>

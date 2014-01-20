@@ -8,6 +8,7 @@ import nl.surfnet.oda.ListHandler;
 import nl.surfnet.oda.NetworkError;
 import nl.surfnet.oda.OnderwijsDataAPI;
 import nl.surfnet.oda.buildings.Building;
+import nl.surfnet.oda.groups.Group;
 import nl.surfnet.oda.persons.Person;
 import nl.surfnet.oda.rooms.Room;
 import android.app.Activity;
@@ -34,7 +35,6 @@ public class MainActivity extends Activity {
         /**
          * PERSONS
          */
-
         // Retrieve the persons info using the PersonsClient
         // we do not add any additional parameters here, so we use null at the params.
         apiClient.getPersonsClient().get("1", null, new EntityHandler<Person>() {
@@ -115,7 +115,6 @@ public class MainActivity extends Activity {
         /**
          * ROOMS
          */
-
         final TextView firstRoom = (TextView)findViewById(R.id.firstRoom);
         final TextView numberOfRooms = (TextView)findViewById(R.id.numberOfRooms);
         // get the data of the room with the ID '1'
@@ -149,6 +148,44 @@ public class MainActivity extends Activity {
             public void failure(NetworkError e) {
                 // inform the user if an error happened.
                 numberOfRooms.setText("Error in listing first page of room :-(");
+                e.printStackTrace();
+            }
+        });
+
+        /**
+         * GROUPS
+         */
+        final TextView firstGroupMembers = (TextView)findViewById(R.id.firstGroupMembers);
+        final TextView numberOfGroups = (TextView)findViewById(R.id.numberOfGroups);
+        // get info about the group with the id '1'
+        apiClient.getGroupsClient().get("1", null, new EntityHandler<Group>() {
+
+            @Override
+            public void success(Group group) {
+                //display the result
+                firstGroupMembers.setText("The group with the id '1' has " + group.getMembers().size() + " member(s), and its name is '" + group.getName() + "'.");
+            }
+
+            @Override
+            public void failure(NetworkError e) {
+                // inform the user that an error happened
+                firstGroupMembers.setText("Error getting info about the group with the id '1' :-(");
+                e.printStackTrace();
+            }
+        });
+        //you can also do inline params:
+        apiClient.getGroupsClient().getList(new Params().setPage(1), new ListHandler<Group>() {
+
+            @Override
+            public void success(List<Group> list) {
+                // display the result
+                numberOfGroups.setText("On the first page there are " + list.size() + " groups.");
+            }
+
+            @Override
+            public void failure(NetworkError e) {
+                // inform the user that an error happened
+                numberOfGroups.setText("Error in listing first page of groups :-(");
                 e.printStackTrace();
             }
         });

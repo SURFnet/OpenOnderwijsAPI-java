@@ -1,6 +1,7 @@
 package nl.surfnet.oda;
 
 import nl.surfnet.oda.buildings.BuildingsClient;
+import nl.surfnet.oda.groups.GroupsClient;
 import nl.surfnet.oda.persons.PersonsClient;
 import nl.surfnet.oda.rooms.RoomsClient;
 
@@ -17,6 +18,7 @@ public class OnderwijsDataAPI {
     private PersonsClient _personsClient;
     private BuildingsClient _buildingsClient;
     private RoomsClient _roomsClient;
+    private GroupsClient _groupsClient;
 
     /**
      * Basic constructor
@@ -52,7 +54,7 @@ public class OnderwijsDataAPI {
     }
 
     /**
-     * Return the client which is responsible for the handling of rooms data.
+     * Returns the client which is responsible for the handling of rooms data.
      *
      * @return The client handling rooms data
      */
@@ -61,6 +63,18 @@ public class OnderwijsDataAPI {
             _roomsClient = new RoomsClient(_baseUrl);
         }
         return _roomsClient;
+    }
+
+    /**
+     * Returns the client which is responsible for the handling of groups data.
+     *
+     * @return The client handling groups data.
+     */
+    public GroupsClient getGroupsClient() {
+        if (_groupsClient == null) {
+            _groupsClient = new GroupsClient(_baseUrl);
+        }
+        return _groupsClient;
     }
 
 }
