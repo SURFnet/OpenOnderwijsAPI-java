@@ -78,9 +78,9 @@ public class AffiliationsClient extends AbstractAPIClient<Affiliation> {
 
     /**
      * Returns a list of all affiliations. Use the "page" parameter to select a page.
-     *
+     * 
      * @param params Parameters of the query. Use null if none
-     * @param listHandler The 'success' method is called with the result as parameter if everything went well. Otherwise 'failure' will be called.
+     * @param handler The 'success' method is called with the result as parameter if everything went well. Otherwise 'failure' will be called.
      */
     @Override
     public void getList(Params params, final ListHandler<Affiliation> handler) {

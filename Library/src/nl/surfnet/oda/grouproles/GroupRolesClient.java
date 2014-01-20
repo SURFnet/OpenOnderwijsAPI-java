@@ -22,9 +22,9 @@ import com.google.gson.reflect.TypeToken;
 
 /**
  * A client for getting info about group roles from the API
- * 
+ *
  * @author Daniel Zolnai
- * 
+ *
  */
 public class GroupRolesClient extends AbstractAPIClient<GroupRole> {
 
@@ -56,9 +56,9 @@ public class GroupRolesClient extends AbstractAPIClient<GroupRole> {
 
     /**
      * Returns a list of all group roles. Use the "page" parameter to select a page.
-     *
+     * 
      * @param params Parameters of the query. Use null if none
-     * @param listHandler The 'success' method is called with the result as parameter if everything went well. Otherwise 'failure' will be called.
+     * @param handler The 'success' method is called with the result as parameter if everything went well. Otherwise 'failure' will be called.
      */
     @Override
     public void getList(Params params, final ListHandler<GroupRole> handler) {

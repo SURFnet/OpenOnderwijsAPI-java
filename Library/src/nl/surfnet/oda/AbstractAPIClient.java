@@ -15,7 +15,7 @@ public abstract class AbstractAPIClient<T> {
 
         /**
          * Sets the page number for the listing. Use only with getList methods.
-         * 
+         *
          * @param pageNumber Number of the page
          * @return the instance of the actual Params object, allows inline creation and modification
          */
@@ -27,10 +27,28 @@ public abstract class AbstractAPIClient<T> {
         // add additional parameters here
     }
 
+    /**
+     * Returns a GsonConverter, which can be used by retrofit. Create a GSON with a builder, then use GsonConverter(GSON).
+     *
+     * @return An object, which converts JSON to the correct Java objects.
+     */
     protected abstract GsonConverter getGsonConverter();
 
+    /**
+     * Used for fetching single objects from the API
+     * 
+     * @param id Unique identifier of the object.
+     * @param params Parameters of the query. Use null if none.
+     * @param handler Callback on success or failure.
+     */
     public abstract void get(String id, Params params, EntityHandler<T> handler);
 
+    /**
+     * Used for fetching lists from the API.
+     *
+     * @param params Parameters of the query. Use null if none.
+     * @param handler Callback on success or failure.
+     */
     public abstract void getList(Params params, ListHandler<T> handler);
 
     /**

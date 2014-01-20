@@ -62,8 +62,8 @@ public class NetworkError {
 
     /**
      * The message of the error - may be null;
-     *
-     * @return
+     * 
+     * @return Returns the message of the error.
      */
     public String getMessage() {
         return _error.getMessage();

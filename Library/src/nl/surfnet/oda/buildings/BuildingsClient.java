@@ -45,9 +45,9 @@ public class BuildingsClient extends AbstractAPIClient<Building> {
 
     /**
      * Returns a list of all buildings. Use the "page" parameter to select a page.
-     *
+     * 
      * @param params Parameters of the query.
-     * @param listHandler The 'success' method is called with the result as parameter if everything went well. Otherwise 'failure' will be called.
+     * @param handler The 'success' method is called with the result as parameter if everything went well. Otherwise 'failure' will be called.
      */
     @Override
     public void getList(Params params, final ListHandler<Building> handler) {
