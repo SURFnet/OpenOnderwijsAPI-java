@@ -1,16 +1,10 @@
 OpenOnderwijsAPI-java
 ========================
 
-### Building the project
-1. Open the project using **eclipse**.
-2. Install the **FatJar plugin** using this URL from the update manager: `http://kurucz-grafika.de/fatjar`
-3. Right-click on your project, and select `Build Fat Jar`
-4. Using the default settings build your .jar. Always build your project before creating the fat jar, or the changes will not be available in the fat jar.
-
 ### Importing the library into your project
-+ If you want to be sure that you are using the latest library, build the project yourself as described above.
++ If you want to be sure that you are using the latest library, build the project yourself as described at the bottom.
 + There's also a library jar available in the Library folder named `oda.jar`.
-+ Import the library jar into your project.
++ Import the library jar (oda.jar, or the one that you have built) into your project.
 
 ### Using the client
 There's an Android demo included, there you can see, how you should use the library.
@@ -31,38 +25,24 @@ There's an Android demo included, there you can see, how you should use the libr
 ### Questions, bugs, enhancements
 For questions about usage, or if you found a bug, you can use the Issues section of the repository. Also, pull requests for enhancements are welcome :)
 
+### Using the repository as a submodule in your project
++ Copy the URL of this repository.
++ In your command window, go to the directory, where you want to place the downloaded sources.
++ Enter `git submodule add https://github.com/repository_url`, where the last part is the URL you copied.
++ Git now downloads the repository to the directory, where you currently are.
++ You are now using this repository as a submodule :)
+
+### If you want to change the code
+
+#### Building the project
+1. Open the project using **eclipse**.
+2. Install the **FatJar plugin** using this URL from the update manager: `http://kurucz-grafika.de/fatjar`
+3. Right-click on your project, and select `Build Fat Jar`
+4. Using the default settings build your .jar. Always build your project before creating the fat jar, or the changes will not be available in the fat jar.
+
 ### License
 This Java API client uses the following libraries:
 
 [**Retrofit** by Square, Inc.](http://square.github.io/retrofit/)
-```
-Copyright 2013 Square, Inc.
 
-Licensed under the Apache License, Version 2.0 (the "License");
-you may not use this file except in compliance with the License.
-You may obtain a copy of the License at
-
-   http://www.apache.org/licenses/LICENSE-2.0
-
-Unless required by applicable law or agreed to in writing, software
-distributed under the License is distributed on an "AS IS" BASIS,
-WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
-See the License for the specific language governing permissions and
-limitations under the License.
-```
 [**google-gson**](https://code.google.com/p/google-gson/)
-```
-Copyright (c) 2008-2009 Google Inc. 
-
-Licensed under the Apache License, Version 2.0 (the "License"); 
-you may not use this file except in compliance with the License. 
-You may obtain a copy of the License at 
-
-  http://www.apache.org/licenses/LICENSE-2.0 
-
-Unless required by applicable law or agreed to in writing, software 
-distributed under the License is distributed on an "AS IS" BASIS, 
-WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. 
-See the License for the specific language governing permissions and 
-limitations under the License.
-```
