@@ -29,6 +29,12 @@ public class NewsItemDeserializer extends EntityDeserializer<NewsItem> {
         }
         JsonObject newsItemJson = json.getAsJsonObject();
         NewsItem newsItem = new NewsItem();
+        Integer id = getAsIntegerNoNull(newsItemJson.get("id"));
+        if (id == null) {
+            newsItem.setId(null);
+        } else {
+            newsItem.setId(id.toString());
+        }
         newsItem.setAuthor(getAsStringNoNull(newsItemJson.get("author")));
         newsItem.setContent(getAsStringNoNull(newsItemJson.get("content")));
         newsItem.setImageUrl(getAsStringNoNull(newsItemJson.get("imageUrl")));

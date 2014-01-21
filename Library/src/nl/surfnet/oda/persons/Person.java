@@ -12,6 +12,7 @@ import nl.surfnet.oda.groups.Group;
  */
 public class Person {
 
+    private String _id;
     private String _givenName;
     private String _surName;
     private String _displayName;
@@ -34,6 +35,14 @@ public class Person {
      * Empty constructor. Needed for JSON - POJO conversion
      */
     public Person() {
+    }
+
+    public String getId() {
+        return _id;
+    }
+
+    public void setId(String id) {
+        _id = id;
     }
 
     public String getGivenName() {

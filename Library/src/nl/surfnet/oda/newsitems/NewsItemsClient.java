@@ -14,7 +14,6 @@ import retrofit.client.Response;
 import retrofit.converter.GsonConverter;
 import retrofit.http.EncodedPath;
 import retrofit.http.GET;
-import retrofit.http.Path;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
@@ -39,8 +38,8 @@ public class NewsItemsClient extends AbstractAPIClient<NewsItem> {
         @GET("/newsitems{params}")
         public void getList(@EncodedPath("params") String params, Callback<List<NewsItem>> cb);
 
-        @GET("/newsitems/{id}{params}")
-        public void get(@Path("id") String id, @EncodedPath("params") String params, Callback<NewsItem> cb);
+        @GET("/{path}{params}")
+        public void get(@EncodedPath("path") String path, @EncodedPath("params") String params, Callback<NewsItem> cb);
     }
 
     private NewsItemsAPIClient _apiClient;
@@ -51,12 +50,13 @@ public class NewsItemsClient extends AbstractAPIClient<NewsItem> {
      * @param baseUrl
      */
     public NewsItemsClient(String baseUrl) {
+        super(baseUrl);
         _apiClient = getRestAdapter(baseUrl).create(NewsItemsAPIClient.class);
     }
 
     /**
      * Returns a list of all news items. Use the "page" parameter to select a page.
-     * 
+     *
      * @param params Parameters of the query. Use null if none
      * @param handler The 'success' method is called with the result as parameter if everything went well. Otherwise 'failure' will be called.
      */
@@ -79,12 +79,12 @@ public class NewsItemsClient extends AbstractAPIClient<NewsItem> {
     /**
      * Gets the news item with the given ID from the API
      *
-     * @param id Identifier of the NewsItem
+     * @param url URL of the resource which returns a NewsItem entity.
      * @param handler The 'success' method is called with the result as parameter if everything went well. Otherwise 'failure' will be called.
      */
     @Override
-    public void get(String id, Params params, final EntityHandler<NewsItem> handler) {
-        _apiClient.get(id, parametersToString(params), new Callback<NewsItem>() {
+    public void get(String url, Params params, final EntityHandler<NewsItem> handler) {
+        _apiClient.get(resolveUrl(url), parametersToString(params), new Callback<NewsItem>() {
 
             @Override
             public void success(NewsItem person, Response response) {
@@ -111,5 +111,10 @@ public class NewsItemsClient extends AbstractAPIClient<NewsItem> {
         .create();
         return new GsonConverter(gson);
         //@formatter:on
+    }
+
+    @Override
+    protected String getEndpoint() {
+        return "newsitems";
     }
 }

@@ -1,5 +1,8 @@
 package nl.surfnet.oda.example;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
 
 import nl.surfnet.oda.AbstractAPIClient.Params;
@@ -9,12 +12,14 @@ import nl.surfnet.oda.NetworkError;
 import nl.surfnet.oda.OnderwijsDataAPI;
 import nl.surfnet.oda.affiliations.Affiliation;
 import nl.surfnet.oda.buildings.Building;
+import nl.surfnet.oda.courses.Course;
 import nl.surfnet.oda.grouproles.GroupRole;
 import nl.surfnet.oda.groups.Group;
 import nl.surfnet.oda.newfeeds.NewsFeed;
 import nl.surfnet.oda.newsitems.NewsItem;
 import nl.surfnet.oda.persons.Person;
 import nl.surfnet.oda.rooms.Room;
+import nl.surfnet.oda.schedule.Lesson;
 import android.app.Activity;
 import android.os.Bundle;
 import android.widget.TextView;
@@ -34,14 +39,14 @@ public class MainActivity extends Activity {
         final TextView numberOfPersons = (TextView)findViewById(R.id.numberOfPersons);
         final TextView firstPerson = (TextView)findViewById(R.id.firstPerson);
         // Create a new client for our API
-        OnderwijsDataAPI apiClient = new OnderwijsDataAPI("http://surfnetapi.pagekite.me/");
+        final OnderwijsDataAPI apiClient = new OnderwijsDataAPI("http://surfnetapi.pagekite.me/");
 
         /**
          * PERSONS
          */
         // Retrieve the persons info using the PersonsClient
         // we do not add any additional parameters here, so we use null at the params.
-        apiClient.getPersonsClient().get("1", null, new EntityHandler<Person>() {
+        apiClient.getPersonsClient().getById("1", null, new EntityHandler<Person>() {
 
             @Override
             public void success(Person person) {
@@ -83,7 +88,7 @@ public class MainActivity extends Activity {
         final TextView AEGBBuilding = (TextView)findViewById(R.id.AEGBBuilding);
         final TextView numberOfBuildings = (TextView)findViewById(R.id.numberOfBuildings);
         // get the building with the ID 'AEGB'
-        apiClient.getBuildingsClient().get("AEGB", null, new EntityHandler<Building>() {
+        apiClient.getBuildingsClient().getById("AEGB", null, new EntityHandler<Building>() {
 
             @Override
             public void success(Building building) {
@@ -122,7 +127,7 @@ public class MainActivity extends Activity {
         final TextView firstRoom = (TextView)findViewById(R.id.firstRoom);
         final TextView numberOfRooms = (TextView)findViewById(R.id.numberOfRooms);
         // get the data of the room with the ID '1'
-        apiClient.getRoomsClient().get("1", null, new EntityHandler<Room>() {
+        apiClient.getRoomsClient().getById("1", null, new EntityHandler<Room>() {
 
             @Override
             public void success(Room room) {
@@ -159,24 +164,23 @@ public class MainActivity extends Activity {
         /**
          * GROUPS
          */
+
         final TextView firstGroupMembers = (TextView)findViewById(R.id.firstGroupMembers);
-        final TextView numberOfGroups = (TextView)findViewById(R.id.numberOfGroups);
-        // get info about the group with the id '1'
-        apiClient.getGroupsClient().get("1", null, new EntityHandler<Group>() {
+        final TextView numberOfGroups = (TextView)findViewById(R.id.numberOfGroups); // get info about the group with the id '1'
+        apiClient.getGroupsClient().getById("1", null, new EntityHandler<Group>() {
 
             @Override
-            public void success(Group group) {
-                // display the result
+            public void success(Group group) { // display the result
                 firstGroupMembers.setText("The group with the id '1' has " + group.getMembers().size() + " member(s), and its name is '" + group.getName() + "'.");
             }
 
             @Override
-            public void failure(NetworkError e) {
-                // inform the user that an error happened
+            public void failure(NetworkError e) { // inform the user that an error happened
                 firstGroupMembers.setText("Error getting info about the group with the id '1' :-(");
                 e.printStackTrace();
             }
         });
+
         // you can also do inline params:
         apiClient.getGroupsClient().getList(new Params().setPage(1), new ListHandler<Group>() {
 
@@ -200,7 +204,7 @@ public class MainActivity extends Activity {
         final TextView secondAffiliationPersons = (TextView)findViewById(R.id.secondAffiliationPersons);
         final TextView numberOfAffiliations = (TextView)findViewById(R.id.numberOfAffiliations);
         // get the info about the affiliation with the id '1'
-        apiClient.getAffiliationsClient().get("2", null, new EntityHandler<Affiliation>() {
+        apiClient.getAffiliationsClient().getById("2", null, new EntityHandler<Affiliation>() {
 
             @Override
             public void success(Affiliation affiliation) {
@@ -238,7 +242,7 @@ public class MainActivity extends Activity {
         final TextView firstNewsItem = (TextView)findViewById(R.id.firstNewsItem);
         final TextView numberOfNewsItems = (TextView)findViewById(R.id.numberOfNewsItems);
         // get the info about the first news item
-        apiClient.getNewsItemsClient().get("1", null, new EntityHandler<NewsItem>() {
+        apiClient.getNewsItemsClient().getById("1", null, new EntityHandler<NewsItem>() {
 
             @Override
             public void success(NewsItem newsItem) {
@@ -264,7 +268,7 @@ public class MainActivity extends Activity {
 
             @Override
             public void failure(NetworkError e) {
-                //  inform the user about the error
+                // inform the user about the error
                 numberOfNewsItems.setText("Error listing the first page of the news items :-(");
                 e.printStackTrace();
             }
@@ -276,7 +280,7 @@ public class MainActivity extends Activity {
         final TextView firstNewsFeed = (TextView)findViewById(R.id.firstNewsFeed);
         final TextView numberOfNewsFeeds = (TextView)findViewById(R.id.numberOfNewsFeeds);
         // get the info about the first newsfeed
-        apiClient.getNewsFeedsClient().get("1", null, new EntityHandler<NewsFeed>() {
+        apiClient.getNewsFeedsClient().getById("1", null, new EntityHandler<NewsFeed>() {
 
             @Override
             public void success(NewsFeed newsFeed) {
@@ -302,7 +306,7 @@ public class MainActivity extends Activity {
 
             @Override
             public void failure(NetworkError e) {
-                //  inform the user about the error
+                // inform the user about the error
                 numberOfNewsFeeds.setText("Error listing the first page of the newsfeeds :-(");
                 e.printStackTrace();
             }
@@ -314,7 +318,7 @@ public class MainActivity extends Activity {
         final TextView firstRoleName = (TextView)findViewById(R.id.firstRoleName);
         final TextView numberOfRoles = (TextView)findViewById(R.id.numberOfRoles);
         // get the info about the first news item
-        apiClient.getGroupRolesClient().get("1", null, new EntityHandler<GroupRole>() {
+        apiClient.getGroupRolesClient().getById("1", null, new EntityHandler<GroupRole>() {
 
             @Override
             public void success(GroupRole groupRole) {
@@ -336,6 +340,10 @@ public class MainActivity extends Activity {
             public void success(List<GroupRole> list) {
                 // display the result
                 numberOfRoles.setText("There are " + list.size() + " group roles on the first page.");
+                /**
+                 * GET PERSON BY URL
+                 */
+                _getPersonByUrl(apiClient, list);
             }
 
             @Override
@@ -346,5 +354,128 @@ public class MainActivity extends Activity {
             }
         });
 
+        /**
+         * COURSES
+         */
+        final TextView firstCourse = (TextView)findViewById(R.id.firstCourse);
+        final TextView numberOfCourses = (TextView)findViewById(R.id.numberOfCourses);
+        apiClient.getCoursesClient().getById("1", null, new EntityHandler<Course>() {
+
+            @Override
+            public void success(Course course) {
+                // display the result
+                firstCourse.setText("The first course has " + course.getLessonUrls().size() + " lessons.");
+            }
+
+            @Override
+            public void failure(NetworkError error) {
+                // inform the user that an error happened
+                firstCourse.setText("Error getting first course :-(");
+                error.printStackTrace();
+            }
+        });
+        apiClient.getCoursesClient().getList(new Params().setPage(1), new ListHandler<Course>() {
+
+            @Override
+            public void success(List<Course> list) {
+                // display the result
+                numberOfCourses.setText("There are " + list.size() + " courses on the first page.");
+            }
+
+            @Override
+            public void failure(NetworkError e) {
+                // inform the user that an error happened
+                numberOfCourses.setText("Error listing first page of courses :-(");
+                e.printStackTrace();
+            }
+        });
+
+        /**
+         * LESSONS: the API does not have a /scheduleentries endpoint yet, so the following tests are commented out.
+         */
+        // final TextView firstLesson = (TextView)findViewById(R.id.firstLesson);
+        // final TextView numberOfLessons = (TextView)findViewById(R.id.numberOfLessons);
+        // /* apiClient.getScheduleClient().getById("1", null, new EntityHandler<Lesson>() {
+        //
+        // @Override
+        // public void success(Lesson lesson) {
+        // // display the result
+        // firstLesson.setText("The first lesson starts at: " + lesson.getStartDate());
+        // }
+        //
+        // @Override
+        // public void failure(NetworkError error) {
+        // // inform the user that an error happened
+        // firstLesson.setText("Error getting first lesson :-(");
+        // error.printStackTrace();
+        // }
+        // });
+        // apiClient.getScheduleClient().getList(new Params().setPage(1), new ListHandler<Lesson>() {
+        //
+        // @Override
+        // public void success(List<Lesson> list) {
+        // // display the result
+        // numberOfLessons.setText("There are " + list.size() + " lessons on the first page.");
+        // }
+        //
+        // @Override
+        // public void failure(NetworkError e) {
+        // // inform the user that an error happened
+        // numberOfLessons.setText("Error listing first page of lessons :-(");
+        // e.printStackTrace();
+        // }
+        // });*/
+
+        /**
+         * SCHEDULE OF A PERSON
+         */
+        final TextView schedulePerson = (TextView)findViewById(R.id.schedulePerson);
+        Params scheduleParams = new Params();
+        try {
+            scheduleParams.setStartDate(new SimpleDateFormat("yyyy-MM-dd").parse("1996-01-01"));
+        } catch (ParseException e) {
+            // no start date then (default is today 00:00)
+        }
+        scheduleParams.setEndDate(new Date());
+        apiClient.getScheduleClient().getScheduleByPerson("1", scheduleParams, new ListHandler<Lesson>() {
+
+            @Override
+            public void success(List<Lesson> list) {
+                // display the result
+                schedulePerson.setText("The first person has " + list.size() + " lessons.");
+            }
+
+            @Override
+            public void failure(NetworkError error) {
+                // inform the user that an error happened
+                schedulePerson.setText("Error getting the schedule of the first person.");
+                error.printStackTrace();
+            }
+        });
+    }
+
+    protected void _getPersonByUrl(OnderwijsDataAPI apiClient, List<GroupRole> list) {
+        // can't do this without the roles
+        if (list == null || list.size() == 0) {
+            return;
+        }
+        GroupRole firstRole = list.get(0);
+        String personUrl = firstRole.getPersonUrl();
+        final TextView personByUrl = (TextView)findViewById(R.id.personByUrl);
+        apiClient.getPersonsClient().get(personUrl, null, new EntityHandler<Person>() {
+
+            @Override
+            public void success(Person person) {
+                // display the result
+                personByUrl.setText("The person linked from the first role is named: " + person.getDisplayName());
+            }
+
+            @Override
+            public void failure(NetworkError e) {
+                // inform the user that an error happened
+                personByUrl.setText("Couldn't get person linked from first role :-(");
+                e.printStackTrace();
+            }
+        });
     }
 }

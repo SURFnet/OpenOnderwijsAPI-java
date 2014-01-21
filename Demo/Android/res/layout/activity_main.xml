@@ -119,4 +119,46 @@
         android:layout_below="@+id/firstRoleName"
         android:text="@android:string/untitled" />
 
+    <TextView
+        android:id="@+id/personByUrl"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/numberOfRoles"
+        android:text="@android:string/untitled" />
+
+    <TextView
+        android:id="@+id/firstCourse"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/personByUrl"
+        android:text="@android:string/untitled" />
+
+    <TextView
+        android:id="@+id/numberOfCourses"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/firstCourse"
+        android:text="@android:string/untitled" />
+
+    <TextView
+        android:id="@+id/firstLesson"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/numberOfCourses"
+        android:text="@android:string/untitled" />
+
+    <TextView
+        android:id="@+id/numberOfLessons"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/firstLesson"
+        android:text="@android:string/untitled" />
+
+    <TextView
+        android:id="@+id/schedulePerson"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/numberOfLessons"
+        android:text="@android:string/untitled" />
+
 </RelativeLayout>

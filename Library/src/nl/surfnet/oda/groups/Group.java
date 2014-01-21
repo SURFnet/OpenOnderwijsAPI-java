@@ -10,6 +10,7 @@ import java.util.List;
  */
 public class Group {
 
+    private String _id;
     private String _type;
     private String _name;
     private String _description;
@@ -20,6 +21,14 @@ public class Group {
      * Empty constructor needed for conversion.
      */
     public Group() {
+    }
+
+    public String getId() {
+        return _id;
+    }
+
+    public void setId(String id) {
+        _id = id;
     }
 
     public String getType() {

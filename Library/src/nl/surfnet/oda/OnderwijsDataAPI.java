@@ -2,12 +2,14 @@ package nl.surfnet.oda;
 
 import nl.surfnet.oda.affiliations.AffiliationsClient;
 import nl.surfnet.oda.buildings.BuildingsClient;
+import nl.surfnet.oda.courses.CoursesClient;
 import nl.surfnet.oda.grouproles.GroupRolesClient;
 import nl.surfnet.oda.groups.GroupsClient;
 import nl.surfnet.oda.newfeeds.NewsFeedsClient;
 import nl.surfnet.oda.newsitems.NewsItemsClient;
 import nl.surfnet.oda.persons.PersonsClient;
 import nl.surfnet.oda.rooms.RoomsClient;
+import nl.surfnet.oda.schedule.ScheduleClient;
 
 /**
  * Base class for communication with the OnderwijsDataAPI. Use the getter methods for getting the different clients.
@@ -27,6 +29,8 @@ public class OnderwijsDataAPI {
     private NewsItemsClient _newsItemsClient;
     private NewsFeedsClient _newsFeedsClient;
     private GroupRolesClient _groupRolesClient;
+    private CoursesClient _coursesClient;
+    private ScheduleClient _scheduleClient;
 
     /**
      * Basic constructor
@@ -123,7 +127,7 @@ public class OnderwijsDataAPI {
 
     /**
      * Returns the client which is responsible for the handling of group roles data.
-     * 
+     *
      * @return The client handling group roles data.
      */
     public GroupRolesClient getGroupRolesClient(){
@@ -131,5 +135,29 @@ public class OnderwijsDataAPI {
             _groupRolesClient = new GroupRolesClient(_baseUrl);
         }
         return _groupRolesClient;
+    }
+
+    /**
+     * Returns the client which is responsible for the handling of courses data.
+     *
+     * @return The client handling courses data.
+     */
+    public CoursesClient getCoursesClient() {
+        if (_coursesClient == null) {
+            _coursesClient = new CoursesClient(_baseUrl);
+        }
+        return _coursesClient;
+    }
+
+    /**
+     * Returns the client which is responsible for the handling of schedule data.
+     *
+     * @return The client handling schedule data.
+     */
+    public ScheduleClient getScheduleClient() {
+        if (_scheduleClient == null) {
+            _scheduleClient = new ScheduleClient(_baseUrl);
+        }
+        return _scheduleClient;
     }
 }

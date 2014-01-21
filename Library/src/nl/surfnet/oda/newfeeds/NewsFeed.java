@@ -7,12 +7,13 @@ import nl.surfnet.oda.newsitems.NewsItem;
 
 /**
  * Represents a news feed
- * 
+ *
  * @author Daniel Zolnai
- * 
+ *
  */
 public class NewsFeed {
 
+    private String _id;
     private List<NewsItem> _items;
     private Date _updated;
     private String _url;
@@ -23,6 +24,14 @@ public class NewsFeed {
      * Empty constructor needed for conversion
      */
     public NewsFeed() {
+    }
+
+    public String getId() {
+        return _id;
+    }
+
+    public void setId(String id) {
+        _id = id;
     }
 
     public List<NewsItem> getItems() {

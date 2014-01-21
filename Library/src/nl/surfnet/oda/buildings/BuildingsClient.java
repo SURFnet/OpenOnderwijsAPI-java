@@ -14,7 +14,6 @@ import retrofit.client.Response;
 import retrofit.converter.GsonConverter;
 import retrofit.http.EncodedPath;
 import retrofit.http.GET;
-import retrofit.http.Path;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
@@ -33,19 +32,20 @@ public class BuildingsClient extends AbstractAPIClient<Building> {
         @GET("/buildings{params}")
         public void getList(@EncodedPath("params") String params, Callback<List<Building>> cb);
 
-        @GET("/buildings/{id}{params}")
-        public void get(@Path("id") String id, @EncodedPath("params") String params, Callback<Building> cb);
+        @GET("/{path}{params}")
+        public void get(@EncodedPath("path") String path, @EncodedPath("params") String params, Callback<Building> cb);
     }
 
     private BuildingsAPIClient _buildingsAPI;
 
     public BuildingsClient(String baseUrl) {
+        super(baseUrl);
         _buildingsAPI = getRestAdapter(baseUrl).create(BuildingsAPIClient.class);
     }
 
     /**
      * Returns a list of all buildings. Use the "page" parameter to select a page.
-     * 
+     *
      * @param params Parameters of the query.
      * @param handler The 'success' method is called with the result as parameter if everything went well. Otherwise 'failure' will be called.
      */
@@ -66,15 +66,15 @@ public class BuildingsClient extends AbstractAPIClient<Building> {
     }
 
     /**
-     * Gets the person with the given index from the API
-     *
-     * @param id Identifier of the Building
+     * Gets the building with the given URL from the API
+     * 
+     * @param url URL of the resource, which returns a Building entity
      * @param params Parameters of the query
      * @param handler The 'success' method is called with the result as parameter if everything went well. Otherwise 'failure' will be called.
      */
     @Override
-    public void get(String id, Params params, final EntityHandler<Building> handler) {
-        _buildingsAPI.get(id, parametersToString(params), new Callback<Building>() {
+    public void get(String url, Params params, final EntityHandler<Building> handler) {
+        _buildingsAPI.get(resolveUrl(url), parametersToString(params), new Callback<Building>() {
 
             @Override
             public void success(Building building, Response response) {
@@ -99,5 +99,10 @@ public class BuildingsClient extends AbstractAPIClient<Building> {
             .create();
         return new GsonConverter(gson);
         //@formatter:on
+    }
+
+    @Override
+    protected String getEndpoint() {
+        return "buildings";
     }
 }

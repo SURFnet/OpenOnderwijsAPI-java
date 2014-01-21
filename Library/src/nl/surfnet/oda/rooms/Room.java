@@ -10,12 +10,21 @@ package nl.surfnet.oda.rooms;
 
 public class Room {
 
+    private String _abbr;
     private String _building;
     private String _name;
     private String _description;
     private Integer _totalSeats;
     private Integer _totalWorkspaces;
     private Integer _availableWorkspaces;
+
+    public String getId() {
+        return _abbr;
+    }
+
+    public void setId(String id) {
+        _abbr = id;
+    }
 
     public String getBuildingUrl() {
         return _building;

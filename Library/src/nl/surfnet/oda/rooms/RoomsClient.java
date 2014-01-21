@@ -14,7 +14,6 @@ import retrofit.client.Response;
 import retrofit.converter.GsonConverter;
 import retrofit.http.EncodedPath;
 import retrofit.http.GET;
-import retrofit.http.Path;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
@@ -39,19 +38,20 @@ public class RoomsClient extends AbstractAPIClient<Room> {
         @GET("/rooms{params}")
         public void getList(@EncodedPath("params") String params, Callback<List<Room>> cb);
 
-        @GET("/rooms/{id}{params}")
-        public void get(@Path("id") String id, @EncodedPath("params") String params, Callback<Room> cb);
+        @GET("/{path}{params}")
+        public void get(@EncodedPath("path") String path, @EncodedPath("params") String params, Callback<Room> cb);
     }
 
     private RoomsAPIClient _roomsAPI;
 
     public RoomsClient(String baseUrl) {
+        super(baseUrl);
         _roomsAPI = getRestAdapter(baseUrl).create(RoomsAPIClient.class);
     }
 
     /**
      * Returns a list of all rooms. Use the "page" parameter to select a page.
-     * 
+     *
      * @param params Parameters of the query
      * @param handler The 'success' method is called with the result as parameter if everything went well. Otherwise 'failure' will be called.
      */
@@ -72,15 +72,15 @@ public class RoomsClient extends AbstractAPIClient<Room> {
     }
 
     /**
-     * Gets the person with the given index from the API
+     * Gets the room with the given url from the API
      *
-     * @param id Identifier of the Room
+     * @param url URL of the resource returning a Room type of entity
      * @param params Parameters of the query
      * @param handler The 'success' method is called with the result as parameter if everything went well. Otherwise 'failure' will be called.
      */
     @Override
-    public void get(String id, Params params, final EntityHandler<Room> handler) {
-        _roomsAPI.get(id, parametersToString(params), new Callback<Room>() {
+    public void get(String url, Params params, final EntityHandler<Room> handler) {
+        _roomsAPI.get(resolveUrl(url), parametersToString(params), new Callback<Room>() {
 
             @Override
             public void success(Room room, Response response) {
@@ -105,5 +105,10 @@ public class RoomsClient extends AbstractAPIClient<Room> {
             .create();
         return new GsonConverter(gson);
         //@formatter:on
+    }
+
+    @Override
+    protected String getEndpoint() {
+        return "rooms";
     }
 }

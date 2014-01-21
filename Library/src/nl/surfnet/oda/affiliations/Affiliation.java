@@ -10,6 +10,7 @@ import java.util.List;
  */
 public class Affiliation {
 
+    private String _id;
     private List<String> _personUrls;
     private String _resourceUrl;
     private String _affiliation;
@@ -18,6 +19,14 @@ public class Affiliation {
      * Empty constructor needed for conversion.
      */
     public Affiliation() {
+    }
+
+    public String getId() {
+        return _id;
+    }
+
+    public void setId(String id) {
+        _id = id;
     }
 
     public List<String> getPersonUrls() {
