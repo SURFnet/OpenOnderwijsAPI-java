@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<project default="javadoc">
+    <target name="javadoc">
+        <javadoc access="private" author="true" classpath="libs/gson-2.2.4.jar;libs/retrofit-1.3.0.jar" destdir="doc" doctitle="Surfnet OpenOnderwijsAPI Java client" nodeprecated="false" nodeprecatedlist="false" noindex="false" nonavbar="false" notree="false" packagenames="nl.surfnet.oda.persons,nl.surfnet.oda.affiliations,nl.surfnet.oda,nl.surfnet.oda.groups,nl.surfnet.oda.rooms,nl.surfnet.oda.newsitems,nl.surfnet.oda.newfeeds,nl.surfnet.oda.grouproles,nl.surfnet.oda.buildings" source="1.6" sourcepath="src" splitindex="true" use="true" version="true"/>
+    </target>
+</project>
