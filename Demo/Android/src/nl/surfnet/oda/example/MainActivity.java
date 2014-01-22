@@ -391,7 +391,7 @@ public class MainActivity extends Activity {
         });
 
         /**
-         * LESSONS: the API does not have a /scheduleentries endpoint yet, so the following tests are commented out.
+         * LESSONS: the API does not have a /schedule endpoint yet, so the following tests are commented out.
          */
         // final TextView firstLesson = (TextView)findViewById(R.id.firstLesson);
         // final TextView numberOfLessons = (TextView)findViewById(R.id.numberOfLessons);
