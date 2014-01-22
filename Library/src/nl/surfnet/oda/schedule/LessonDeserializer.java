@@ -5,6 +5,7 @@ import java.text.ParseException;
 import java.util.Date;
 
 import nl.surfnet.oda.EntityDeserializer;
+import nl.surfnet.oda.ISO8601;
 
 import com.google.gson.JsonDeserializationContext;
 import com.google.gson.JsonElement;
@@ -37,7 +38,7 @@ public class LessonDeserializer extends EntityDeserializer<Lesson> {
         } else {
             // convert the date
             try {
-                Date startDate = ISO8601.toCalendar(startDateString).getTime();
+                Date startDate = ISO8601.toDate(startDateString);
                 lesson.setStartDate(startDate);
             } catch (ParseException e) {
                 lesson.setStartDate(null);
@@ -50,7 +51,7 @@ public class LessonDeserializer extends EntityDeserializer<Lesson> {
         } else {
             // convert the date
             try {
-                Date endDate = ISO8601.toCalendar(endDateString).getTime();
+                Date endDate = ISO8601.toDate(endDateString);
                 lesson.setEndDate(endDate);
             } catch (ParseException e) {
                 lesson.setEndDate(null);

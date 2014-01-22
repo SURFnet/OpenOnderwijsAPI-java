@@ -7,6 +7,7 @@ import java.util.Date;
 import java.util.List;
 
 import nl.surfnet.oda.EntityDeserializer;
+import nl.surfnet.oda.ISO8601;
 import nl.surfnet.oda.newsitems.NewsItem;
 import nl.surfnet.oda.newsitems.NewsItemDeserializer;
 
@@ -42,7 +43,7 @@ public class NewsFeedDeserializer extends EntityDeserializer<NewsFeed> {
         } else {
             // convert the date
             try {
-                Date updatedDate = ISO8601.toCalendar(dateString).getTime();
+                Date updatedDate = ISO8601.toDate(dateString);
                 newsFeed.setUpdatedDate(updatedDate);
             } catch (ParseException e) {
                 newsFeed.setUpdatedDate(null);

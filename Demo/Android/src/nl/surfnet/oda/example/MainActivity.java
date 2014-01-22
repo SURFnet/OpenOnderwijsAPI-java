@@ -393,38 +393,38 @@ public class MainActivity extends Activity {
         /**
          * LESSONS: the API does not have a /schedule endpoint yet, so the following tests are commented out.
          */
-        // final TextView firstLesson = (TextView)findViewById(R.id.firstLesson);
-        // final TextView numberOfLessons = (TextView)findViewById(R.id.numberOfLessons);
-        // /* apiClient.getScheduleClient().getById("1", null, new EntityHandler<Lesson>() {
-        //
-        // @Override
-        // public void success(Lesson lesson) {
-        // // display the result
-        // firstLesson.setText("The first lesson starts at: " + lesson.getStartDate());
-        // }
-        //
-        // @Override
-        // public void failure(NetworkError error) {
-        // // inform the user that an error happened
-        // firstLesson.setText("Error getting first lesson :-(");
-        // error.printStackTrace();
-        // }
-        // });
-        // apiClient.getScheduleClient().getList(new Params().setPage(1), new ListHandler<Lesson>() {
-        //
-        // @Override
-        // public void success(List<Lesson> list) {
-        // // display the result
-        // numberOfLessons.setText("There are " + list.size() + " lessons on the first page.");
-        // }
-        //
-        // @Override
-        // public void failure(NetworkError e) {
-        // // inform the user that an error happened
-        // numberOfLessons.setText("Error listing first page of lessons :-(");
-        // e.printStackTrace();
-        // }
-        // });*/
+        final TextView firstLesson = (TextView)findViewById(R.id.firstLesson);
+        final TextView numberOfLessons = (TextView)findViewById(R.id.numberOfLessons);
+        apiClient.getScheduleClient().getById("1", null, new EntityHandler<Lesson>() {
+
+            @Override
+            public void success(Lesson lesson) {
+                // display the result
+                firstLesson.setText("The first lesson starts at: " + lesson.getStartDate());
+            }
+
+            @Override
+            public void failure(NetworkError error) {
+                // inform the user that an error happened
+                firstLesson.setText("Error getting first lesson :-(");
+                error.printStackTrace();
+            }
+        });
+        apiClient.getScheduleClient().getList(new Params().setPage(1), new ListHandler<Lesson>() {
+
+            @Override
+            public void success(List<Lesson> list) {
+                // display the result
+                numberOfLessons.setText("There are " + list.size() + " lessons on the first page.");
+            }
+
+            @Override
+            public void failure(NetworkError e) {
+                // inform the user that an error happened
+                numberOfLessons.setText("Error listing first page of lessons :-(");
+                e.printStackTrace();
+            }
+        });
 
         /**
          * SCHEDULE OF A PERSON

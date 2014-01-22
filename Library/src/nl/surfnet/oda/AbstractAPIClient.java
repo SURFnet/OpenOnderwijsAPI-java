@@ -2,11 +2,9 @@ package nl.surfnet.oda;
 
 import java.net.MalformedURLException;
 import java.net.URL;
-import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map.Entry;
-import java.util.TimeZone;
 
 import retrofit.RestAdapter;
 import retrofit.converter.GsonConverter;
@@ -36,7 +34,7 @@ public abstract class AbstractAPIClient<T> {
          * @return Parameters with the added parameter
          */
         public Params setStartDate(Date date) {
-            String endString = _convertDateToString(date);
+            String endString = ISO8601.fromDate(date);
             put("start", endString);
             return this;
         }
@@ -48,19 +46,12 @@ public abstract class AbstractAPIClient<T> {
          * @return Parameters with the added parameter
          */
         public Params setEndDate(Date date) {
-            String endString = _convertDateToString(date);
+            String endString = ISO8601.fromDate(date);
             put("end", endString);
             return this;
         }
 
         // add additional parameters here
-
-        private String _convertDateToString(Date date) {
-            SimpleDateFormat dateFormat = new SimpleDateFormat("yyyyMMddHHmm");
-            dateFormat.setTimeZone(TimeZone.getTimeZone("UTC"));
-            return (dateFormat.format(date) + "UTC");
-        }
-
     }
 
     private String _baseUrl;
@@ -78,7 +69,7 @@ public abstract class AbstractAPIClient<T> {
 
     /**
      * Used for fetching single objects from the API
-     * 
+     *
      * @param url Resource locator of the object.
      * @param params Parameters of the query. Use null if none.
      * @param handler Callback on success or failure.
