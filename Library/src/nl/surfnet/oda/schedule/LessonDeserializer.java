@@ -1,11 +1,8 @@
 package nl.surfnet.oda.schedule;
 
 import java.lang.reflect.Type;
-import java.text.ParseException;
-import java.util.Date;
 
 import nl.surfnet.oda.EntityDeserializer;
-import nl.surfnet.oda.ISO8601;
 
 import com.google.gson.JsonDeserializationContext;
 import com.google.gson.JsonElement;
@@ -31,32 +28,9 @@ public class LessonDeserializer extends EntityDeserializer<Lesson> {
         lesson.setCourseUrl(getAsStringNoNull(jsonLesson.get("url")));
         lesson.setDescription(getAsStringNoNull(jsonLesson.get("description")));
         lesson.setRoomUrl(getAsStringNoNull(jsonLesson.get("room")));
-        // start date
-        String startDateString = getAsStringNoNull(jsonLesson.get("start"));
-        if (startDateString == null) {
-            lesson.setStartDate(null);
-        } else {
-            // convert the date
-            try {
-                Date startDate = ISO8601.toDate(startDateString);
-                lesson.setStartDate(startDate);
-            } catch (ParseException e) {
-                lesson.setStartDate(null);
-            }
-        }
-        // end date
-        String endDateString = getAsStringNoNull(jsonLesson.get("end"));
-        if (endDateString == null) {
-            lesson.setEndDate(null);
-        } else {
-            // convert the date
-            try {
-                Date endDate = ISO8601.toDate(endDateString);
-                lesson.setEndDate(endDate);
-            } catch (ParseException e) {
-                lesson.setEndDate(null);
-            }
-        }
+        lesson.setLastModifiedDate(getAsDateNoNull(jsonLesson.get("lastModified")));
+        lesson.setStartDate(getAsDateNoNull(jsonLesson.get("start")));
+        lesson.setEndDate(getAsDateNoNull(jsonLesson.get("end")));
         return lesson;
     }
 

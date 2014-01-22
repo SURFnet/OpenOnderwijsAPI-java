@@ -20,6 +20,7 @@ public class NewsItem {
     private String _imageUrl;
     private String _link;
     private String _content;
+    private Date _lastModified;
 
     /**
      * Empty constructor needed for conversion
@@ -97,5 +98,13 @@ public class NewsItem {
 
     public void setContent(String content) {
         _content = content;
+    }
+
+    public Date getLastModifiedDate() {
+        return _lastModified;
+    }
+
+    public void setLastModified(Date lastModified) {
+        _lastModified = lastModified;
     }
 }

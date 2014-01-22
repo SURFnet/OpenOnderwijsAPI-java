@@ -12,14 +12,17 @@ import nl.surfnet.oda.NetworkError;
 import nl.surfnet.oda.OnderwijsDataAPI;
 import nl.surfnet.oda.affiliations.Affiliation;
 import nl.surfnet.oda.buildings.Building;
+import nl.surfnet.oda.courseresults.CourseResult;
 import nl.surfnet.oda.courses.Course;
 import nl.surfnet.oda.grouproles.GroupRole;
 import nl.surfnet.oda.groups.Group;
+import nl.surfnet.oda.minors.Minor;
 import nl.surfnet.oda.newfeeds.NewsFeed;
 import nl.surfnet.oda.newsitems.NewsItem;
 import nl.surfnet.oda.persons.Person;
 import nl.surfnet.oda.rooms.Room;
 import nl.surfnet.oda.schedule.Lesson;
+import nl.surfnet.oda.testresults.TestResult;
 import android.app.Activity;
 import android.os.Bundle;
 import android.widget.TextView;
@@ -391,7 +394,7 @@ public class MainActivity extends Activity {
         });
 
         /**
-         * LESSONS: the API does not have a /schedule endpoint yet, so the following tests are commented out.
+         * LESSONS
          */
         final TextView firstLesson = (TextView)findViewById(R.id.firstLesson);
         final TextView numberOfLessons = (TextView)findViewById(R.id.numberOfLessons);
@@ -452,6 +455,115 @@ public class MainActivity extends Activity {
                 error.printStackTrace();
             }
         });
+
+        /**
+         * COURSE RESULTS
+         */
+        final TextView firstCourseResult = (TextView)findViewById(R.id.firstCourseResult);
+        final TextView numberOfCourseResults = (TextView)findViewById(R.id.numberOfCourseResults);
+        apiClient.getCourseResultsClient().getById("1", null, new EntityHandler<CourseResult>() {
+
+            @Override
+            public void success(CourseResult courseResult) {
+                // display the result
+                firstCourseResult.setText("The first course result's grade is: " + courseResult.getGrade());
+            }
+
+            @Override
+            public void failure(NetworkError error) {
+                // inform the user that an error happened
+                firstCourseResult.setText("Error getting first course result :-(");
+                error.printStackTrace();
+            }
+        });
+        apiClient.getCourseResultsClient().getList(new Params().setPage(1), new ListHandler<CourseResult>() {
+
+            @Override
+            public void success(List<CourseResult> list) {
+                // display the result
+                numberOfCourseResults.setText("There are " + list.size() + " course results on the first page.");
+            }
+
+            @Override
+            public void failure(NetworkError e) {
+                // inform the user that an error happened
+                numberOfCourseResults.setText("Error listing first page of course results :-(");
+                e.printStackTrace();
+            }
+        });
+
+        /**
+         * TEST RESULTS
+         */
+        final TextView firstTestResult = (TextView)findViewById(R.id.firstTestResult);
+        final TextView numberOfTestResults = (TextView)findViewById(R.id.numberOfTestResults);
+        apiClient.getTestResultsClient().getById("1", null, new EntityHandler<TestResult>() {
+
+            @Override
+            public void success(TestResult testResult) {
+                // display the result
+                firstTestResult.setText("The first test result's date is: " + testResult.getDate().toString());
+            }
+
+            @Override
+            public void failure(NetworkError error) {
+                // inform the user that an error happened
+                firstTestResult.setText("Error getting first test result :-(");
+                error.printStackTrace();
+            }
+        });
+        apiClient.getTestResultsClient().getList(new Params().setPage(1), new ListHandler<TestResult>() {
+
+            @Override
+            public void success(List<TestResult> list) {
+                // display the result
+                numberOfTestResults.setText("There are " + list.size() + " test results on the first page.");
+            }
+
+            @Override
+            public void failure(NetworkError e) {
+                // inform the user that an error happened
+                numberOfTestResults.setText("Error listing first page of test results :-(");
+                e.printStackTrace();
+            }
+        });
+
+        /**
+         * MINORS
+         */
+        final TextView firstMinor = (TextView)findViewById(R.id.firstMinor);
+        final TextView numberOfMinors = (TextView)findViewById(R.id.numberOfMinors);
+        apiClient.getMinorsClient().getById("1", null, new EntityHandler<Minor>() {
+
+            @Override
+            public void success(Minor minor) {
+                // display the result
+                firstMinor.setText("The first minor was last modificated at: " + minor.getLastModified());
+            }
+
+            @Override
+            public void failure(NetworkError error) {
+                // inform the user that an error happened
+                firstMinor.setText("Error getting first minor :-(");
+                error.printStackTrace();
+            }
+        });
+        apiClient.getMinorsClient().getList(new Params().setPage(1), new ListHandler<Minor>() {
+
+            @Override
+            public void success(List<Minor> list) {
+                // display the result
+                numberOfMinors.setText("There are " + list.size() + " minors on the first page.");
+            }
+
+            @Override
+            public void failure(NetworkError e) {
+                // inform the user that an error happened
+                numberOfMinors.setText("Error listing first page of minors :-(");
+                e.printStackTrace();
+            }
+        });
+
     }
 
     protected void _getPersonByURL(OnderwijsDataAPI apiClient, List<GroupRole> list) {

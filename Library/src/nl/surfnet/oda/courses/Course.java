@@ -1,12 +1,13 @@
 package nl.surfnet.oda.courses;
 
+import java.util.Date;
 import java.util.List;
 
 /**
  * Represents a course.
- * 
+ *
  * @author Daniel Zolnai
- * 
+ *
  */
 public class Course {
 
@@ -28,6 +29,7 @@ public class Course {
     private String _department;
     private String _lecturerUrl;
     private List<String> _groupUrls;
+    private Date _lastModified;
 
     /**
      * Empty constructor needed for conversion.
@@ -177,5 +179,13 @@ public class Course {
 
     public void setGroupUrls(List<String> groupUrls) {
         _groupUrls = groupUrls;
+    }
+
+    public Date getLastModifiedDate() {
+        return _lastModified;
+    }
+
+    public void setLastModifiedDate(Date lastModified) {
+        _lastModified = lastModified;
     }
 }

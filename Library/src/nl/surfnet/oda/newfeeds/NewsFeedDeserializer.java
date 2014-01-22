@@ -1,13 +1,10 @@
 package nl.surfnet.oda.newfeeds;
 
 import java.lang.reflect.Type;
-import java.text.ParseException;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 
 import nl.surfnet.oda.EntityDeserializer;
-import nl.surfnet.oda.ISO8601;
 import nl.surfnet.oda.newsitems.NewsItem;
 import nl.surfnet.oda.newsitems.NewsItemDeserializer;
 
@@ -36,19 +33,7 @@ public class NewsFeedDeserializer extends EntityDeserializer<NewsFeed> {
         newsFeed.setDescription(getAsStringNoNull(jsonNewsFeed.get("description")));
         newsFeed.setResourceUrl(getAsStringNoNull(jsonNewsFeed.get("url")));
         newsFeed.setTitle(getAsStringNoNull(jsonNewsFeed.get("title")));
-        // convert the date
-        String dateString = getAsStringNoNull(jsonNewsFeed.get("updated"));
-        if (dateString == null) {
-            newsFeed.setUpdatedDate(null);
-        } else {
-            // convert the date
-            try {
-                Date updatedDate = ISO8601.toDate(dateString);
-                newsFeed.setUpdatedDate(updatedDate);
-            } catch (ParseException e) {
-                newsFeed.setUpdatedDate(null);
-            }
-        }
+        newsFeed.setUpdatedDate(getAsDateNoNull(jsonNewsFeed.get("updated")));
         // get the news items
         JsonArray jsonItems = jsonNewsFeed.get("items").getAsJsonArray();
         List<NewsItem> items = new ArrayList<NewsItem>();

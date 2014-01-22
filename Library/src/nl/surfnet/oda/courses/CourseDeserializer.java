@@ -43,6 +43,7 @@ public class CourseDeserializer extends EntityDeserializer<Course> {
         course.setName(getAsStringNoNull(jsonCourse.get("name")));
         course.setOrganisation(getAsStringNoNull(jsonCourse.get("organisation")));
         course.setRequirements(getAsStringNoNull(jsonCourse.get("requirements")));
+        course.setLastModifiedDate(getAsDateNoNull(jsonCourse.get("lastModified")));
         JsonArray jsonGroupUrls = jsonCourse.get("groups").getAsJsonArray();
         List<String> groupUrls = new ArrayList<String>();
         for (int i = 0; i < jsonGroupUrls.size(); ++i) {

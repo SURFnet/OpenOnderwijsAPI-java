@@ -28,6 +28,7 @@ public class RoomDeserializer extends EntityDeserializer<Room> {
         room.setTotalSeats(getAsIntegerNoNull(data.get("totalSeats")));
         room.setTotalWorkspaces(getAsIntegerNoNull(data.get("totalWorkspaces")));
         room.setAvailableWorkspaces(getAsIntegerNoNull(data.get("availableWorkspaces")));
+        room.setLastModifiedDate(getAsDateNoNull(data.get("lastModified")));
         return room;
     }
 }

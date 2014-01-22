@@ -33,6 +33,7 @@ public class GroupDeserializer extends EntityDeserializer<Group> {
         group.setName(getAsStringNoNull(groupJson.get("name")));
         group.setResourceUrl(getAsStringNoNull(groupJson.get("url")));
         group.setType(getAsStringNoNull(groupJson.get("type")));
+        group.setLastModifiedDate(getAsDateNoNull(groupJson.get("lastModified")));
         // get the members of the group, if there are any
         if (groupJson.has("members")) {
             JsonArray membersJson = groupJson.get("members").getAsJsonArray();
