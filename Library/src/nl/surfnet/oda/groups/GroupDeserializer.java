@@ -28,12 +28,7 @@ public class GroupDeserializer extends EntityDeserializer<Group> {
         }
         JsonObject groupJson = json.getAsJsonObject();
         Group group = new Group();
-        Integer id = getAsIntegerNoNull(groupJson.get("id"));
-        if (id == null) {
-            group.setId(null);
-        } else {
-            group.setId(id.toString());
-        }
+        group.setId(getAsStringNoNull(groupJson.get("id")));
         group.setDescription(getAsStringNoNull(groupJson.get("description")));
         group.setName(getAsStringNoNull(groupJson.get("name")));
         group.setResourceUrl(getAsStringNoNull(groupJson.get("url")));

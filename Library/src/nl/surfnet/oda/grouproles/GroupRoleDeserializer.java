@@ -24,12 +24,7 @@ public class GroupRoleDeserializer extends EntityDeserializer<GroupRole> {
         }
         JsonObject jsonGroupRole = json.getAsJsonObject();
         GroupRole groupRole = new GroupRole();
-        Integer id = getAsIntegerNoNull(jsonGroupRole.get("id"));
-        if (id == null) {
-            groupRole.setId(null);
-        } else {
-            groupRole.setId(id.toString());
-        }
+        groupRole.setId(getAsStringNoNull(jsonGroupRole.get("id")));
         groupRole.setGroupUrl(getAsStringNoNull(jsonGroupRole.get("group")));
         groupRole.setPersonUrl(getAsStringNoNull(jsonGroupRole.get("person")));
         groupRole.setResourceUrl(getAsStringNoNull(jsonGroupRole.get("url")));

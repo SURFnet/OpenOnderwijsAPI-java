@@ -78,8 +78,8 @@ public abstract class AbstractAPIClient<T> {
 
     /**
      * Used for fetching single objects from the API
-     *
-     * @param url Unique identifier of the object.
+     * 
+     * @param url Resource locator of the object.
      * @param params Parameters of the query. Use null if none.
      * @param handler Callback on success or failure.
      */

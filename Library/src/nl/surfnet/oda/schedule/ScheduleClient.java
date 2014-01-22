@@ -36,7 +36,7 @@ public class ScheduleClient extends AbstractAPIClient<Lesson> {
      */
     private interface LessonsAPIClient {
 
-        @GET("/scheduleentries{params}")
+        @GET("/schedule{params}")
         public void getList(@EncodedPath("params") String params, Callback<List<Lesson>> cb);
 
         @GET("/{path}{params}")
@@ -188,7 +188,7 @@ public class ScheduleClient extends AbstractAPIClient<Lesson> {
 
     @Override
     protected String getEndpoint() {
-        return "scheduleentries";
+        return "schedule";
     }
 
 }

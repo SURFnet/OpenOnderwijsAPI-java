@@ -27,12 +27,7 @@ public class AffiliationDeserializer extends EntityDeserializer<Affiliation> {
         }
         JsonObject affiliationJson = json.getAsJsonObject();
         Affiliation affiliation = new Affiliation();
-        Integer id = getAsIntegerNoNull(affiliationJson.get("id"));
-        if (id == null) {
-            affiliation.setId(null);
-        } else {
-            affiliation.setId(id.toString());
-        }
+        affiliation.setId(getAsStringNoNull(affiliationJson.get("id")));
         affiliation.setAffiliation(getAsStringNoNull(affiliationJson.get("affiliation")));
         affiliation.setResourceUrl(getAsStringNoNull(affiliationJson.get("url")));
         // get the urls of the persons

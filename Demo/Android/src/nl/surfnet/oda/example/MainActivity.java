@@ -343,7 +343,7 @@ public class MainActivity extends Activity {
                 /**
                  * GET PERSON BY URL
                  */
-                _getPersonByUrl(apiClient, list);
+                _getPersonByURL(apiClient, list);
             }
 
             @Override
@@ -454,9 +454,10 @@ public class MainActivity extends Activity {
         });
     }
 
-    protected void _getPersonByUrl(OnderwijsDataAPI apiClient, List<GroupRole> list) {
+    protected void _getPersonByURL(OnderwijsDataAPI apiClient, List<GroupRole> list) {
         // can't do this without the roles
         if (list == null || list.size() == 0) {
+
             return;
         }
         GroupRole firstRole = list.get(0);

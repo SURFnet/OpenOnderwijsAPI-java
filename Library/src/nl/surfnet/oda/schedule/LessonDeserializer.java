@@ -26,13 +26,7 @@ public class LessonDeserializer extends EntityDeserializer<Lesson> {
         }
         JsonObject jsonLesson = json.getAsJsonObject();
         Lesson lesson = new Lesson();
-        // get the id
-        Integer id = getAsIntegerNoNull(jsonLesson.get("id"));
-        if (id == null) {
-            lesson.setId(null);
-        } else {
-            lesson.setId(id.toString());
-        }
+        lesson.setId(getAsStringNoNull(jsonLesson.get("id")));
         lesson.setCourseUrl(getAsStringNoNull(jsonLesson.get("url")));
         lesson.setDescription(getAsStringNoNull(jsonLesson.get("description")));
         lesson.setRoomUrl(getAsStringNoNull(jsonLesson.get("room")));

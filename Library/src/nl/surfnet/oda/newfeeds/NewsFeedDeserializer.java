@@ -31,12 +31,7 @@ public class NewsFeedDeserializer extends EntityDeserializer<NewsFeed> {
         }
         JsonObject jsonNewsFeed = json.getAsJsonObject();
         NewsFeed newsFeed = new NewsFeed();
-        Integer id = getAsIntegerNoNull(jsonNewsFeed.get("id"));
-        if (id == null) {
-            newsFeed.setId(null);
-        } else {
-            newsFeed.setId(id.toString());
-        }
+        newsFeed.setId(getAsStringNoNull(jsonNewsFeed.get("id")));
         newsFeed.setDescription(getAsStringNoNull(jsonNewsFeed.get("description")));
         newsFeed.setResourceUrl(getAsStringNoNull(jsonNewsFeed.get("url")));
         newsFeed.setTitle(getAsStringNoNull(jsonNewsFeed.get("title")));
