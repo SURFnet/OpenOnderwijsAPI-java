@@ -1,5 +1,8 @@
 package nl.surfnet.oda;
 
+import java.net.MalformedURLException;
+import java.net.URL;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.Map.Entry;
 
@@ -24,7 +27,37 @@ public abstract class AbstractAPIClient<T> {
             return this;
         }
 
+        /**
+         * Sets the starting date for the listing. Used for example at schedules.
+         *
+         * @param date Starting date
+         * @return Parameters with the added parameter
+         */
+        public Params setStartDate(Date date) {
+            String endString = ISO8601.fromDate(date);
+            put("start", endString);
+            return this;
+        }
+
+        /**
+         * Sets the ending date for the listing. Used for example at schedules.
+         *
+         * @param date Ending date
+         * @return Parameters with the added parameter
+         */
+        public Params setEndDate(Date date) {
+            String endString = ISO8601.fromDate(date);
+            put("end", endString);
+            return this;
+        }
+
         // add additional parameters here
+    }
+
+    private String _baseUrl;
+
+    public AbstractAPIClient(String url) {
+        _baseUrl = url;
     }
 
     /**
@@ -36,12 +69,12 @@ public abstract class AbstractAPIClient<T> {
 
     /**
      * Used for fetching single objects from the API
-     * 
-     * @param id Unique identifier of the object.
+     *
+     * @param url Resource locator of the object.
      * @param params Parameters of the query. Use null if none.
      * @param handler Callback on success or failure.
      */
-    public abstract void get(String id, Params params, EntityHandler<T> handler);
+    public abstract void get(String url, Params params, EntityHandler<T> handler);
 
     /**
      * Used for fetching lists from the API.
@@ -50,6 +83,49 @@ public abstract class AbstractAPIClient<T> {
      * @param handler Callback on success or failure.
      */
     public abstract void getList(Params params, ListHandler<T> handler);
+
+
+    /**
+     * Used for fetching objects from the API using their ID's
+     *
+     * @param id ID of the object. Use entity.getId() to get the id of the object.
+     * @param params Parameters of the query. Use null if none.
+     * @param handler Callback on success or failure.
+     */
+    public void getById(String id, Params params, EntityHandler<T> handler){
+        String url = _baseUrl;
+        if (!_baseUrl.endsWith("/")) {
+            url += "/";
+        }
+        url += getEndpoint() + "/" + id;
+        get(url, params, handler);
+    }
+
+    /**
+     * Returns the endpoint as a string.
+     *
+     * @return The endpoint as a string, without the base
+     */
+    protected abstract String getEndpoint();
+
+    /**
+     * Resolves an URL to the endpoint version
+     *
+     * @param url The absolute url.
+     * @return The url which is relative to the base url.
+     */
+    protected String resolveUrl(String url) {
+        if (url.startsWith(_baseUrl)) {
+            return url.substring(_baseUrl.length());
+        } else {
+            try {
+            URL uri = new URL(url);
+            return uri.getFile();
+            } catch (MalformedURLException e) {
+                return null;
+            }
+        }
+    }
 
     /**
      * Creates a Rest adapter for the communication between the API and the application.

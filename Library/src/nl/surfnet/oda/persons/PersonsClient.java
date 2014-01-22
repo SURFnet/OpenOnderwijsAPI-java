@@ -14,7 +14,6 @@ import retrofit.client.Response;
 import retrofit.converter.GsonConverter;
 import retrofit.http.EncodedPath;
 import retrofit.http.GET;
-import retrofit.http.Path;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
@@ -39,8 +38,8 @@ public class PersonsClient extends AbstractAPIClient<Person> {
         @GET("/persons{params}")
         public void getList(@EncodedPath("params") String params, Callback<List<Person>> cb);
 
-        @GET("/persons/{id}{params}")
-        public void get(@Path("id") String id, @EncodedPath("params") String params, Callback<Person> cb);
+        @GET("/{path}{params}")
+        public void get(@EncodedPath("path") String path, @EncodedPath("params") String params, Callback<Person> cb);
     }
 
     private PersonsAPIClient _personsAPI;
@@ -52,6 +51,7 @@ public class PersonsClient extends AbstractAPIClient<Person> {
      * @param baseUrl
      */
     public PersonsClient(String baseUrl) {
+        super(baseUrl);
         _personsAPI = getRestAdapter(baseUrl).create(PersonsAPIClient.class);
     }
 
@@ -78,14 +78,15 @@ public class PersonsClient extends AbstractAPIClient<Person> {
     }
 
     /**
-     * Gets the person with the given ID from the API
+     * Gets the person with the given URL from the API
      *
-     * @param id Identifier of the Person
+     * @param url URL of the resource which returns a Person type entity
+     * @param params Parameters of the query. Use null if none.
      * @param handler The 'success' method is called with the result as parameter if everything went well. Otherwise 'failure' will be called.
      */
     @Override
-    public void get(String id, Params params, final EntityHandler<Person> handler) {
-        _personsAPI.get(id, parametersToString(params), new Callback<Person>() {
+    public void get(String url, Params params, final EntityHandler<Person> handler) {
+        _personsAPI.get(resolveUrl(url), parametersToString(params), new Callback<Person>() {
 
             @Override
             public void success(Person person, Response response) {
@@ -112,5 +113,10 @@ public class PersonsClient extends AbstractAPIClient<Person> {
         .create();
         return new GsonConverter(gson);
         //@formatter:on
+    }
+
+    @Override
+    protected String getEndpoint() {
+        return "persons";
     }
 }

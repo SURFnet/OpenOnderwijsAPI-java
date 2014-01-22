@@ -26,6 +26,7 @@ public class PersonDeserializer extends EntityDeserializer<Person> {
     public Person deserialize(JsonElement json, Type typeOfT, JsonDeserializationContext context) throws JsonParseException {
         final Person person = new Person();
         final JsonObject data = json.getAsJsonObject();
+        person.setId(getAsStringNoNull(data.get("id")));
         person.setDepartment(getAsStringNoNull(data.get("department")));
         person.setDisplayName(getAsStringNoNull(data.get("displayName")));
         person.setEmployeeID(getAsStringNoNull(data.get("employeeID")));

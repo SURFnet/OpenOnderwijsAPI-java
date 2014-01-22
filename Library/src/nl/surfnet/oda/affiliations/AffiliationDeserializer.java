@@ -14,9 +14,9 @@ import com.google.gson.JsonParseException;
 
 /**
  * Deserializes a JSON to an Affiliation object.
- * 
+ *
  * @author Daniel Zolnai
- * 
+ *
  */
 public class AffiliationDeserializer extends EntityDeserializer<Affiliation> {
 
@@ -27,6 +27,7 @@ public class AffiliationDeserializer extends EntityDeserializer<Affiliation> {
         }
         JsonObject affiliationJson = json.getAsJsonObject();
         Affiliation affiliation = new Affiliation();
+        affiliation.setId(getAsStringNoNull(affiliationJson.get("id")));
         affiliation.setAffiliation(getAsStringNoNull(affiliationJson.get("affiliation")));
         affiliation.setResourceUrl(getAsStringNoNull(affiliationJson.get("url")));
         // get the urls of the persons

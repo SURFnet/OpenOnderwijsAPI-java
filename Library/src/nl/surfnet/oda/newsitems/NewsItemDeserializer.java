@@ -7,6 +7,7 @@ import java.util.Date;
 import java.util.List;
 
 import nl.surfnet.oda.EntityDeserializer;
+import nl.surfnet.oda.ISO8601;
 
 import com.google.gson.JsonArray;
 import com.google.gson.JsonDeserializationContext;
@@ -29,6 +30,7 @@ public class NewsItemDeserializer extends EntityDeserializer<NewsItem> {
         }
         JsonObject newsItemJson = json.getAsJsonObject();
         NewsItem newsItem = new NewsItem();
+        newsItem.setId(getAsStringNoNull(newsItemJson.get("id")));
         newsItem.setAuthor(getAsStringNoNull(newsItemJson.get("author")));
         newsItem.setContent(getAsStringNoNull(newsItemJson.get("content")));
         newsItem.setImageUrl(getAsStringNoNull(newsItemJson.get("imageUrl")));
@@ -42,8 +44,8 @@ public class NewsItemDeserializer extends EntityDeserializer<NewsItem> {
         } else {
             // convert the date
             try {
-            Date pubDate = ISO8601.toCalendar(date).getTime();
-            newsItem.setPublicationDate(pubDate);
+                Date pubDate = ISO8601.toDate(date);
+                newsItem.setPublicationDate(pubDate);
             } catch (ParseException e) {
                 newsItem.setPublicationDate(null);
             }

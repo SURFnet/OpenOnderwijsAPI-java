@@ -14,7 +14,6 @@ import retrofit.client.Response;
 import retrofit.converter.GsonConverter;
 import retrofit.http.EncodedPath;
 import retrofit.http.GET;
-import retrofit.http.Path;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
@@ -39,8 +38,8 @@ public class GroupRolesClient extends AbstractAPIClient<GroupRole> {
         @GET("/grouproles{params}")
         public void getList(@EncodedPath("params") String params, Callback<List<GroupRole>> cb);
 
-        @GET("/grouproles/{id}{params}")
-        public void get(@Path("id") String id, @EncodedPath("params") String params, Callback<GroupRole> cb);
+        @GET("/{path}{params}")
+        public void get(@EncodedPath("path") String path, @EncodedPath("params") String params, Callback<GroupRole> cb);
     }
 
     private GroupRolesAPIClient _apiClient;
@@ -51,12 +50,13 @@ public class GroupRolesClient extends AbstractAPIClient<GroupRole> {
      * @param baseUrl
      */
     public GroupRolesClient(String baseUrl) {
+        super(baseUrl);
         _apiClient = getRestAdapter(baseUrl).create(GroupRolesAPIClient.class);
     }
 
     /**
      * Returns a list of all group roles. Use the "page" parameter to select a page.
-     * 
+     *
      * @param params Parameters of the query. Use null if none
      * @param handler The 'success' method is called with the result as parameter if everything went well. Otherwise 'failure' will be called.
      */
@@ -77,14 +77,14 @@ public class GroupRolesClient extends AbstractAPIClient<GroupRole> {
     }
 
     /**
-     * Gets the group role with the given ID from the API
-     *
-     * @param id Identifier of the GroupRole
+     * Gets the group role with the given URL from the API
+     * 
+     * @param url URL of the resource which returns a GroupRole entity
      * @param handler The 'success' method is called with the result as parameter if everything went well. Otherwise 'failure' will be called.
      */
     @Override
-    public void get(String id, Params params, final EntityHandler<GroupRole> handler) {
-        _apiClient.get(id, parametersToString(params), new Callback<GroupRole>() {
+    public void get(String url, Params params, final EntityHandler<GroupRole> handler) {
+        _apiClient.get(resolveUrl(url), parametersToString(params), new Callback<GroupRole>() {
 
             @Override
             public void success(GroupRole person, Response response) {
@@ -111,5 +111,10 @@ public class GroupRolesClient extends AbstractAPIClient<GroupRole> {
         .create();
         return new GsonConverter(gson);
         //@formatter:on
+    }
+
+    @Override
+    protected String getEndpoint() {
+        return "grouproles";
     }
 }

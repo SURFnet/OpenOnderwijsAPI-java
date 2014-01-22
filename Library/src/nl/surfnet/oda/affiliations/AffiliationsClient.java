@@ -14,7 +14,6 @@ import retrofit.client.Response;
 import retrofit.converter.GsonConverter;
 import retrofit.http.EncodedPath;
 import retrofit.http.GET;
-import retrofit.http.Path;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
@@ -39,11 +38,11 @@ public class AffiliationsClient extends AbstractAPIClient<Affiliation> {
         @GET("/affiliations{params}")
         public void getList(@EncodedPath("params") String params, Callback<List<Affiliation>> cb);
 
-        @GET("/affiliations/{id}{params}")
-        public void get(@Path("id") String id, @EncodedPath("params") String params, Callback<Affiliation> cb);
+        @GET("/{path}{params}")
+        public void get(@EncodedPath("path") String path, @EncodedPath("params") String params, Callback<Affiliation> cb);
     }
 
-    AffiliationsAPIClient _apiClient;
+    private AffiliationsAPIClient _apiClient;
 
     /**
      * Constructor. Creates an interface to the API using the RestAdapter
@@ -51,18 +50,19 @@ public class AffiliationsClient extends AbstractAPIClient<Affiliation> {
      * @param baseUrl Base URL of the API. For example: https://api.example.com/
      */
     public AffiliationsClient(String baseUrl) {
+        super(baseUrl);
         _apiClient = getRestAdapter(baseUrl).create(AffiliationsAPIClient.class);
     }
 
     /**
-     * Gets the affiliation with the given id from the API
+     * Gets the affiliation with the given URL from the API
      *
-     * @param id Identifier of the affiliation
+     * @param url URL of the resource which returns an Affiliation entity
      * @param handler The 'success' method is called with the result as parameter if everything went well. Otherwise 'failure' will be called with the error.
      */
     @Override
-    public void get(String id, Params params, final EntityHandler<Affiliation> handler) {
-        _apiClient.get(id, parametersToString(params), new Callback<Affiliation>() {
+    public void get(String url, Params params, final EntityHandler<Affiliation> handler) {
+        _apiClient.get(resolveUrl(url), parametersToString(params), new Callback<Affiliation>() {
 
             @Override
             public void success(Affiliation affiliation, Response response) {
@@ -78,7 +78,7 @@ public class AffiliationsClient extends AbstractAPIClient<Affiliation> {
 
     /**
      * Returns a list of all affiliations. Use the "page" parameter to select a page.
-     * 
+     *
      * @param params Parameters of the query. Use null if none
      * @param handler The 'success' method is called with the result as parameter if everything went well. Otherwise 'failure' will be called.
      */
@@ -111,6 +111,11 @@ public class AffiliationsClient extends AbstractAPIClient<Affiliation> {
         .create();
         return new GsonConverter(gson);
         //@formatter:on
+    }
+
+    @Override
+    protected String getEndpoint() {
+        return "affiliations";
     }
 
 }

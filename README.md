@@ -12,12 +12,13 @@ There's an Android demo included, there you can see, how you should use the libr
   `OnderwijsDataAPI apiClient = new OnderwijsDataAPI("http://your.api.url");`
 + Now you can get the different sub-APIs for getting different data. Getting the sub-API for persons:
   `apiClient.getPersonsClient()`
-+ Use the `get(...)` and the `getList(...)` methods to fetch the data from the sub-API. Both have a callback, which can return with a success or failure method.
-+ With `get(id, params, handler)` you fetch data of a single object. The **id** is the unique identifier of the object. **Remember: this is not always a number!** The **params** is a Params type of object. You can create this the following way:
++ Use the `get(...)`, `getById(...)` and the `getList(...)` methods to fetch the data from the sub-API. All of them have a callback, which can return with a success or failure method.
++ With `get(url, params, handler)` you fetch data of a single object. The **url** is the resource url of the object. Use entity.getResourceUrl() to get this. You can also use `getById(id, params, handler)`, which uses the object's **id** instead of its URL. **Remember: this is not always a number!**  The **params** is a Params type of object. You can create this the following way:
   ```java
 
   Params params = new Params();
   params.setPage(1); //adds the &page=1 parameter to the query
+  params.setEndDate(new Date()) //sets now as the ending date of the listing
   params.put("sort","name"); // you can also add custom parameters
   ```
 + `getList(params, handler)` works the same way as get, only it returns a list of objects.

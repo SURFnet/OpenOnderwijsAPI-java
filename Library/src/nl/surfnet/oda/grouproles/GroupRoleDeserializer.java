@@ -11,9 +11,9 @@ import com.google.gson.JsonParseException;
 
 /**
  * Deserializes a JSON to a GroupRole object
- * 
+ *
  * @author Daniel Zolnai
- * 
+ *
  */
 public class GroupRoleDeserializer extends EntityDeserializer<GroupRole> {
 
@@ -24,6 +24,7 @@ public class GroupRoleDeserializer extends EntityDeserializer<GroupRole> {
         }
         JsonObject jsonGroupRole = json.getAsJsonObject();
         GroupRole groupRole = new GroupRole();
+        groupRole.setId(getAsStringNoNull(jsonGroupRole.get("id")));
         groupRole.setGroupUrl(getAsStringNoNull(jsonGroupRole.get("group")));
         groupRole.setPersonUrl(getAsStringNoNull(jsonGroupRole.get("person")));
         groupRole.setResourceUrl(getAsStringNoNull(jsonGroupRole.get("url")));

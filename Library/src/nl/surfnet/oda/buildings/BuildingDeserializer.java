@@ -21,6 +21,7 @@ public class BuildingDeserializer extends EntityDeserializer<Building> {
     public Building deserialize(JsonElement json, Type typeOfT, JsonDeserializationContext context) throws JsonParseException {
         final Building building = new Building();
         final JsonObject data = json.getAsJsonObject();
+        building.setId(getAsStringNoNull(data.get("abbr")));
         building.setAddress(getAsStringNoNull(data.get("address")));
         building.setCity(getAsStringNoNull(data.get("city")));
         building.setDescription(getAsStringNoNull(data.get("description")));

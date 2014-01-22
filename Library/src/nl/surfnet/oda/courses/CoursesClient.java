@@ -1,4 +1,4 @@
-package nl.surfnet.oda.newfeeds;
+package nl.surfnet.oda.courses;
 
 import java.lang.reflect.Type;
 import java.util.List;
@@ -20,51 +20,47 @@ import com.google.gson.GsonBuilder;
 import com.google.gson.reflect.TypeToken;
 
 /**
- * A client for getting info about news feeds from the API
- *
+ * A client for getting info about courses from the API
+ * 
  * @author Daniel Zolnai
- *
+ * 
  */
-public class NewsFeedsClient extends AbstractAPIClient<NewsFeed> {
+public class CoursesClient extends AbstractAPIClient<Course> {
+
     /**
-     * Provides an interface to the NewsFeeds API using retrofit.
+     * Provides an interface to the Courses API using retrofit.
      *
      * @author Daniel Zolnai
      *
      */
-    private interface NewsFeedsAPIClient {
+    private interface CoursesAPIClient {
 
-        @GET("/newsfeeds{params}")
-        public void getList(@EncodedPath("params") String params, Callback<List<NewsFeed>> cb);
+        @GET("/courses{params}")
+        public void getList(@EncodedPath("params") String params, Callback<List<Course>> cb);
 
         @GET("/{path}{params}")
-        public void get(@EncodedPath("path") String path, @EncodedPath("params") String params, Callback<NewsFeed> cb);
+        public void get(@EncodedPath("path") String path, @EncodedPath("params") String params, Callback<Course> cb);
     }
 
-    private NewsFeedsAPIClient _apiClient;
+    private CoursesAPIClient _apiClient;
 
-    /**
-     * Constructor. Creates a new interface for the communication with the API using a Retrofit RestAdapter
-     *
-     * @param baseUrl
-     */
-    public NewsFeedsClient(String baseUrl) {
+    public CoursesClient(String baseUrl) {
         super(baseUrl);
-        _apiClient = getRestAdapter(baseUrl).create(NewsFeedsAPIClient.class);
+        _apiClient = getRestAdapter(baseUrl).create(CoursesAPIClient.class);
     }
 
     /**
-     * Returns a list of all newsfeeds. Use the "page" parameter to select a page.
+     * Returns a list of all courses. Use the "page" parameter to select a page.
      *
      * @param params Parameters of the query. Use null if none
      * @param handler The 'success' method is called with the result as parameter if everything went well. Otherwise 'failure' will be called.
      */
     @Override
-    public void getList(Params params, final ListHandler<NewsFeed> handler) {
-        _apiClient.getList(parametersToString(params), new Callback<List<NewsFeed>>() {
+    public void getList(Params params, final ListHandler<Course> handler) {
+        _apiClient.getList(parametersToString(params), new Callback<List<Course>>() {
 
             @Override
-            public void success(List<NewsFeed> list, Response response) {
+            public void success(List<Course> list, Response response) {
                 handler.success(list);
             }
 
@@ -76,19 +72,19 @@ public class NewsFeedsClient extends AbstractAPIClient<NewsFeed> {
     }
 
     /**
-     * Gets the NewsFeed with the given URL from the API
+     * Gets the courses with the given URL from the API
      *
-     * @param url Identifier of the NewsFeed
+     * @param url URL of the resource which returns a Course type entity
      * @param params Parameters of the query. Use null if none.
      * @param handler The 'success' method is called with the result as parameter if everything went well. Otherwise 'failure' will be called.
      */
     @Override
-    public void get(String url, Params params, final EntityHandler<NewsFeed> handler) {
-        _apiClient.get(resolveUrl(url), parametersToString(params), new Callback<NewsFeed>() {
+    public void get(String url, Params params, final EntityHandler<Course> handler) {
+        _apiClient.get(resolveUrl(url), parametersToString(params), new Callback<Course>() {
 
             @Override
-            public void success(NewsFeed newsFeed, Response response) {
-                handler.success(newsFeed);
+            public void success(Course course, Response response) {
+                handler.success(course);
             }
 
             @Override
@@ -104,10 +100,10 @@ public class NewsFeedsClient extends AbstractAPIClient<NewsFeed> {
     @Override
     protected GsonConverter getGsonConverter() {
         //@formatter:off
-        Type newsFeedListType = new TypeToken<List<NewsFeed>>() {}.getType();
+        Type courseListType = new TypeToken<List<Course>>() {}.getType();
         Gson gson = new GsonBuilder()
-        .registerTypeAdapter(NewsFeed.class, new NewsFeedDeserializer())
-        .registerTypeAdapter(newsFeedListType, new ListDeserializer<NewsFeed>(new NewsFeedDeserializer()))
+        .registerTypeAdapter(Course.class, new CourseDeserializer())
+        .registerTypeAdapter(courseListType, new ListDeserializer<Course>(new CourseDeserializer()))
         .create();
         return new GsonConverter(gson);
         //@formatter:on
@@ -115,7 +111,7 @@ public class NewsFeedsClient extends AbstractAPIClient<NewsFeed> {
 
     @Override
     protected String getEndpoint() {
-        return "newsfeeds";
+        return "courses";
     }
 
 }

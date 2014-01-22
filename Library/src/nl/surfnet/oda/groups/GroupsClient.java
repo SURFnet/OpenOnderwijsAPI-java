@@ -14,7 +14,6 @@ import retrofit.client.Response;
 import retrofit.converter.GsonConverter;
 import retrofit.http.EncodedPath;
 import retrofit.http.GET;
-import retrofit.http.Path;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
@@ -38,8 +37,8 @@ public class GroupsClient extends AbstractAPIClient<Group> {
         @GET("/groups{params}")
         public void getList(@EncodedPath("params") String params, Callback<List<Group>> cb);
 
-        @GET("/groups/{id}{params}")
-        public void get(@Path("id") String id, @EncodedPath("params") String params, Callback<Group> cb);
+        @GET("/{path}{params}")
+        public void get(@EncodedPath("path") String path, @EncodedPath("params") String params, Callback<Group> cb);
     }
 
     private GroupsAPIClient _groupsApi;
@@ -50,18 +49,20 @@ public class GroupsClient extends AbstractAPIClient<Group> {
      * @param baseUrl URL of the API. For example: https://api.company.com/
      */
     public GroupsClient(String baseUrl) {
+        super(baseUrl);
         _groupsApi = getRestAdapter(baseUrl).create(GroupsAPIClient.class);
     }
 
     /**
-     * Returns a group with the given id. You can add additional parameters to your Params object.
+     * Returns a group with the given url. You can add additional parameters to your Params object.
      *
+     * @param url URL of the resource with a Group type
      * @param params Additional parameters. Use 'null' if none.
      * @param handler Callback for the result or error.
      */
     @Override
-    public void get(String id, Params params, final EntityHandler<Group> handler) {
-        _groupsApi.get(id, parametersToString(params), new Callback<Group>() {
+    public void get(String url, Params params, final EntityHandler<Group> handler) {
+        _groupsApi.get(resolveUrl(url), parametersToString(params), new Callback<Group>() {
 
             @Override
             public void success(Group group, Response response) {
@@ -110,6 +111,11 @@ public class GroupsClient extends AbstractAPIClient<Group> {
         .create();
         return new GsonConverter(gson);
         //@formatter:on
+    }
+
+    @Override
+    protected String getEndpoint() {
+        return "groups";
     }
 
 }

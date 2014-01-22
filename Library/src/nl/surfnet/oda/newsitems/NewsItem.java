@@ -11,6 +11,7 @@ import java.util.List;
  */
 public class NewsItem {
 
+    private String _id;
     private List<String> _newsFeedUrls;
     private String _resourceUrl;
     private Date _pubDate;
@@ -24,6 +25,14 @@ public class NewsItem {
      * Empty constructor needed for conversion
      */
     public NewsItem() {
+    }
+
+    public String getId() {
+        return _id;
+    }
+
+    public void setId(String id) {
+        _id = id;
     }
 
     public List<String> getNewsFeedUrls() {

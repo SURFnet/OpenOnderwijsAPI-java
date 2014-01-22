@@ -9,6 +9,7 @@ package nl.surfnet.oda.buildings;
  */
 public class Building {
 
+    private String _abbr = null;
     private String _resourceUrl = null;
     private String _name = null;
     private String _description = null;
@@ -22,6 +23,14 @@ public class Building {
      * Empty constructor needed for GSON - POJO conversion
      */
     Building() {
+    }
+
+    public String getId() {
+        return _abbr;
+    }
+
+    public void setId(String id) {
+        _abbr = id;
     }
 
     public String getResourceUrl() {
