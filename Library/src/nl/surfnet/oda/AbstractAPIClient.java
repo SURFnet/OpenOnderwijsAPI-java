@@ -51,6 +51,28 @@ public abstract class AbstractAPIClient<T> {
             return this;
         }
 
+        /**
+         * Sets the search filter for the listing. Used for example at persons
+         *
+         * @param searchText The text to search for
+         * @return Parameters with the added parameter
+         */
+        public Params setSearchFilter(String searchText) {
+            put("q", searchText);
+            return this;
+        }
+
+        /**
+         * Sets a filter on affiliations to the listing. Only the items related to this affiliation will be listed.
+         *
+         * @param affiliationName The name of the affiliation
+         * @return Parameters with the added parameter
+         */
+        public Params setAffiliationFilter(String affiliationName) {
+            put("affiliation", affiliationName);
+            return this;
+        }
+
         // add additional parameters here
     }
 

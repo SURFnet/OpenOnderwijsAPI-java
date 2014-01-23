@@ -65,16 +65,17 @@ public class MainActivity extends Activity {
             }
         });
 
-        // create a params object, and set the page to 1.
+        // create a params object, and set the page to 1, also search to persons with the name 'Bibber'
         Params listParams = new Params();
         listParams.setPage(1);
+        listParams.setSearchFilter("bibber");
         // get the list of the persons on the first page
         apiClient.getPersonsClient().getList(listParams, new ListHandler<Person>() {
 
             @Override
             public void success(List<Person> list) {
                 // display the number of persons in the UI
-                numberOfPersons.setText("There are " + list.size() + " persons on the first page.");
+                numberOfPersons.setText("There are " + list.size() + " persons on the first page named 'bibber'.");
             }
 
             @Override
