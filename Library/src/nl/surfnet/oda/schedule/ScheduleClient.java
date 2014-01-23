@@ -130,7 +130,7 @@ public class ScheduleClient extends AbstractAPIClient<Lesson> {
     /**
      * Returns a schedule assiociated to a room.
      *
-     * @param group_id ID of the group.
+     * @param room_id ID of the Room.
      * @param params Parameters of the query. Use null if none.
      * @param handler Callback for success/failure.
      */
@@ -151,8 +151,8 @@ public class ScheduleClient extends AbstractAPIClient<Lesson> {
 
     /**
      * Returns a schedule assiociated to a person.
-     *
-     * @param group_id ID of the group.
+     * 
+     * @param person_id ID of the person.
      * @param params Parameters of the query. Use null if none.
      * @param handler Callback for success/failure.
      */
