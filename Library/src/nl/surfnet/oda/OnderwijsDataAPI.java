@@ -2,14 +2,17 @@ package nl.surfnet.oda;
 
 import nl.surfnet.oda.affiliations.AffiliationsClient;
 import nl.surfnet.oda.buildings.BuildingsClient;
+import nl.surfnet.oda.courseresults.CourseResultsClient;
 import nl.surfnet.oda.courses.CoursesClient;
 import nl.surfnet.oda.grouproles.GroupRolesClient;
 import nl.surfnet.oda.groups.GroupsClient;
+import nl.surfnet.oda.minors.MinorsClient;
 import nl.surfnet.oda.newfeeds.NewsFeedsClient;
 import nl.surfnet.oda.newsitems.NewsItemsClient;
 import nl.surfnet.oda.persons.PersonsClient;
 import nl.surfnet.oda.rooms.RoomsClient;
 import nl.surfnet.oda.schedule.ScheduleClient;
+import nl.surfnet.oda.testresults.TestResultsClient;
 
 /**
  * Base class for communication with the OnderwijsDataAPI. Use the getter methods for getting the different clients.
@@ -31,6 +34,9 @@ public class OnderwijsDataAPI {
     private GroupRolesClient _groupRolesClient;
     private CoursesClient _coursesClient;
     private ScheduleClient _scheduleClient;
+    private CourseResultsClient _courseResultsClient;
+    private TestResultsClient _testResultClient;
+    private MinorsClient _minorsClient;
 
     /**
      * Basic constructor
@@ -159,5 +165,40 @@ public class OnderwijsDataAPI {
             _scheduleClient = new ScheduleClient(_baseUrl);
         }
         return _scheduleClient;
+    }
+
+    /**
+     * Returns the client which is responsible for the handling of course results data.
+     *
+     * @return The client handling course results data.
+     */
+    public CourseResultsClient getCourseResultsClient(){
+        if (_courseResultsClient == null) {
+            _courseResultsClient = new CourseResultsClient(_baseUrl);
+        } return _courseResultsClient;
+    }
+
+    /**
+     * Returns the client which is responsible for the handling of test results data.
+     *
+     * @return The client handling test results data.
+     */
+    public TestResultsClient getTestResultsClient() {
+        if (_testResultClient == null) {
+            _testResultClient = new TestResultsClient(_baseUrl);
+        }
+        return _testResultClient;
+    }
+
+    /**
+     * Returns the client which is responsible for the handling of minors data.
+     * 
+     * @return The client handling minors data.
+     */
+    public MinorsClient getMinorsClient() {
+        if (_minorsClient == null) {
+            _minorsClient = new MinorsClient(_baseUrl);
+        }
+        return _minorsClient;
     }
 }

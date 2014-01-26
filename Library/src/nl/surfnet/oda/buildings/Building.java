@@ -1,5 +1,7 @@
 package nl.surfnet.oda.buildings;
 
+import java.util.Date;
+
 
 /**
  * Represents a building.
@@ -18,6 +20,7 @@ public class Building {
     private String _city = null;
     private Double _lat = null;
     private Double _lon = null;
+    private Date _lastModified = null;
 
     /**
      * Empty constructor needed for GSON - POJO conversion
@@ -95,6 +98,14 @@ public class Building {
 
     public void setLongitude(Double longitude) {
         _lon = longitude;
+    }
+
+    public Date getLastModifiedDate() {
+        return _lastModified;
+    }
+
+    public void setLastModifiedDate(Date lastModified) {
+        _lastModified = lastModified;
     }
 
 }

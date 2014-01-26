@@ -30,6 +30,7 @@ public class BuildingDeserializer extends EntityDeserializer<Building> {
         building.setName(getAsStringNoNull(data.get("name")));
         building.setPostalCode(getAsStringNoNull(data.get("postalCode")));
         building.setResourceUrl(getAsStringNoNull(data.get("url")));
+        building.setLastModifiedDate(getAsDateNoNull(data.get("lastModified")));
         return building;
     }
 }

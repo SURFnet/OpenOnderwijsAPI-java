@@ -42,6 +42,7 @@ public class PersonDeserializer extends EntityDeserializer<Person> {
         person.setSurName(getAsStringNoNull(data.get("surName")));
         person.setTelephoneNumber(getAsStringNoNull(data.get("telephoneNumber")));
         person.setTitle(getAsStringNoNull(data.get("title")));
+        person.setLastModifiedDate(getAsDateNoNull(data.get("lastModified")));
         // get the affiliations
         JsonArray jsonAffiliations = data.get("affiliations").getAsJsonArray();
         List<String> affiliations = new ArrayList<String>();

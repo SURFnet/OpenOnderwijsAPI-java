@@ -1,5 +1,6 @@
 package nl.surfnet.oda.groups;
 
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -16,6 +17,7 @@ public class Group {
     private String _description;
     private String _resourceUrl;
     private List<GroupMember> _members;
+    private Date _lastModified;
 
     /**
      * Empty constructor needed for conversion.
@@ -71,4 +73,11 @@ public class Group {
         _members = members;
     }
 
+    public Date getLastModifiedDate() {
+        return _lastModified;
+    }
+
+    public void setLastModifiedDate(Date lastModified) {
+        _lastModified = lastModified;
+    }
 }

@@ -1,5 +1,6 @@
 package nl.surfnet.oda.persons;
 
+import java.util.Date;
 import java.util.List;
 
 import nl.surfnet.oda.groups.Group;
@@ -30,6 +31,7 @@ public class Person {
     private String _resourceUrl;
     private List<String> _affiliations;
     private List<Group> _groups;
+    private Date _lastModified;
 
     /**
      * Empty constructor. Needed for JSON - POJO conversion
@@ -179,5 +181,13 @@ public class Person {
 
     public void setGroups(List<Group> groups) {
         _groups = groups;
+    }
+
+    public Date getLastModifiedDate() {
+        return _lastModified;
+    }
+
+    public void setLastModifiedDate(Date lastModified) {
+        _lastModified = lastModified;
     }
 }

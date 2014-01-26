@@ -1,5 +1,7 @@
 package nl.surfnet.oda.rooms;
 
+import java.util.Date;
+
 
 /**
  * Represents a room.
@@ -17,6 +19,7 @@ public class Room {
     private Integer _totalSeats;
     private Integer _totalWorkspaces;
     private Integer _availableWorkspaces;
+    private Date _lastModified;
 
     public String getId() {
         return _abbr;
@@ -72,5 +75,13 @@ public class Room {
 
     public void setAvailableWorkspaces(Integer availableWorkspaces) {
         _availableWorkspaces = availableWorkspaces;
+    }
+
+    public Date getLastModifiedDate() {
+        return _lastModified;
+    }
+
+    public void setLastModifiedDate(Date lastModified) {
+        _lastModified = lastModified;
     }
 }

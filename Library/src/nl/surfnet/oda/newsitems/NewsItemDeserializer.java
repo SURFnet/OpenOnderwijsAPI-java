@@ -1,13 +1,10 @@
 package nl.surfnet.oda.newsitems;
 
 import java.lang.reflect.Type;
-import java.text.ParseException;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 
 import nl.surfnet.oda.EntityDeserializer;
-import nl.surfnet.oda.ISO8601;
 
 import com.google.gson.JsonArray;
 import com.google.gson.JsonDeserializationContext;
@@ -35,21 +32,10 @@ public class NewsItemDeserializer extends EntityDeserializer<NewsItem> {
         newsItem.setContent(getAsStringNoNull(newsItemJson.get("content")));
         newsItem.setImageUrl(getAsStringNoNull(newsItemJson.get("imageUrl")));
         newsItem.setLink(getAsStringNoNull(newsItemJson.get("link")));
+        newsItem.setLastModified(getAsDateNoNull(newsItemJson.get("lastModified")));
         newsItem.setResourceUrl(getAsStringNoNull(newsItemJson.get("url")));
         newsItem.setTitle(getAsStringNoNull(newsItemJson.get("title")));
-        // parse the date
-        String date = getAsStringNoNull(newsItemJson.get("pubDate"));
-        if (date == null) {
-            newsItem.setPublicationDate(null);
-        } else {
-            // convert the date
-            try {
-                Date pubDate = ISO8601.toDate(date);
-                newsItem.setPublicationDate(pubDate);
-            } catch (ParseException e) {
-                newsItem.setPublicationDate(null);
-            }
-        }
+        newsItem.setPublicationDate(getAsDateNoNull(newsItemJson.get("pubDate")));
         // get the news feed urls
         JsonArray jsonFeedUrls = newsItemJson.get("feeds").getAsJsonArray();
         List<String> feedUrls = new ArrayList<String>();

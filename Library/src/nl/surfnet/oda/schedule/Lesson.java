@@ -4,9 +4,9 @@ import java.util.Date;
 
 /**
  * Represents a lesson.
- * 
+ *
  * @author Daniel Zolnai
- * 
+ *
  */
 public class Lesson {
 
@@ -17,6 +17,7 @@ public class Lesson {
     private String _description;
     private Date _start;
     private Date _end;
+    private Date _lastModified;
 
     /**
      * Empty constructor needed for conversion
@@ -78,5 +79,13 @@ public class Lesson {
 
     public void setEndDate(Date endDate) {
         _end = endDate;
+    }
+
+    public Date getLastModifiedDate() {
+        return _lastModified;
+    }
+
+    public void setLastModifiedDate(Date lastModified) {
+        _lastModified = lastModified;
     }
 }
