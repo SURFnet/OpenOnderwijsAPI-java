@@ -8,6 +8,7 @@ import nl.surfnet.oda.EntityHandler;
 import nl.surfnet.oda.ListDeserializer;
 import nl.surfnet.oda.ListHandler;
 import nl.surfnet.oda.NetworkError;
+import nl.surfnet.oda.oauth.OAuthHandler;
 import retrofit.Callback;
 import retrofit.RetrofitError;
 import retrofit.client.Response;
@@ -21,9 +22,9 @@ import com.google.gson.reflect.TypeToken;
 
 /**
  * A client for getting info about minors from the API
- * 
+ *
  * @author Daniel Zolnai
- * 
+ *
  */
 public class MinorsClient extends AbstractAPIClient<Minor> {
 
@@ -44,8 +45,8 @@ public class MinorsClient extends AbstractAPIClient<Minor> {
 
     private MinorsAPIClient _apiClient;
 
-    public MinorsClient(String baseUrl) {
-        super(baseUrl);
+    public MinorsClient(String baseUrl, OAuthHandler oauthHandler) {
+        super(baseUrl, oauthHandler);
         _apiClient = getRestAdapter(baseUrl).create(MinorsAPIClient.class);
     }
 

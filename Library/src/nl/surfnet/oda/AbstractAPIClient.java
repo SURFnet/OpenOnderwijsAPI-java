@@ -6,6 +6,8 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.Map.Entry;
 
+import nl.surfnet.oda.oauth.OAuthHandler;
+import retrofit.RequestInterceptor;
 import retrofit.RestAdapter;
 import retrofit.converter.GsonConverter;
 
@@ -77,9 +79,11 @@ public abstract class AbstractAPIClient<T> {
     }
 
     private String _baseUrl;
+    private OAuthHandler _oauthHandler;
 
-    public AbstractAPIClient(String url) {
+    public AbstractAPIClient(String url, OAuthHandler oauthHandler) {
         _baseUrl = url;
+        _oauthHandler = oauthHandler;
     }
 
     /**
@@ -154,9 +158,20 @@ public abstract class AbstractAPIClient<T> {
      */
     protected RestAdapter getRestAdapter(String baseUrl) {
         //@formatter:off
+        RequestInterceptor requestInterceptor = new RequestInterceptor() {
+            @Override
+            public void intercept(RequestFacade request) {
+                //if there is an access token available, include it
+                if(_oauthHandler != null && _oauthHandler.isLoggedIn()) {
+                    request.addHeader("Authorization", "Bearer " + _oauthHandler.getTokenData().getAccessToken());
+                }
+            }
+          };
+
         RestAdapter restAdapter = new RestAdapter.Builder()
         .setServer(baseUrl)
         .setConverter(getGsonConverter())
+        .setRequestInterceptor(requestInterceptor)
         .build();
         return restAdapter;
         //@formatter:on

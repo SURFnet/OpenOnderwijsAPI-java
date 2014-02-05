@@ -8,6 +8,7 @@ import nl.surfnet.oda.EntityHandler;
 import nl.surfnet.oda.ListDeserializer;
 import nl.surfnet.oda.ListHandler;
 import nl.surfnet.oda.NetworkError;
+import nl.surfnet.oda.oauth.OAuthHandler;
 import retrofit.Callback;
 import retrofit.RetrofitError;
 import retrofit.client.Response;
@@ -44,8 +45,8 @@ public class RoomsClient extends AbstractAPIClient<Room> {
 
     private RoomsAPIClient _roomsAPI;
 
-    public RoomsClient(String baseUrl) {
-        super(baseUrl);
+    public RoomsClient(String baseUrl, OAuthHandler oauthHandler) {
+        super(baseUrl, oauthHandler);
         _roomsAPI = getRestAdapter(baseUrl).create(RoomsAPIClient.class);
     }
 

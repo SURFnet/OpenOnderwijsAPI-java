@@ -8,6 +8,7 @@ import nl.surfnet.oda.EntityHandler;
 import nl.surfnet.oda.ListDeserializer;
 import nl.surfnet.oda.ListHandler;
 import nl.surfnet.oda.NetworkError;
+import nl.surfnet.oda.oauth.OAuthHandler;
 import retrofit.Callback;
 import retrofit.RetrofitError;
 import retrofit.client.Response;
@@ -21,9 +22,9 @@ import com.google.gson.reflect.TypeToken;
 
 /**
  * A client for getting info about courses from the API
- * 
+ *
  * @author Daniel Zolnai
- * 
+ *
  */
 public class CoursesClient extends AbstractAPIClient<Course> {
 
@@ -44,8 +45,8 @@ public class CoursesClient extends AbstractAPIClient<Course> {
 
     private CoursesAPIClient _apiClient;
 
-    public CoursesClient(String baseUrl) {
-        super(baseUrl);
+    public CoursesClient(String baseUrl, OAuthHandler oauthHandler) {
+        super(baseUrl, oauthHandler);
         _apiClient = getRestAdapter(baseUrl).create(CoursesAPIClient.class);
     }
 

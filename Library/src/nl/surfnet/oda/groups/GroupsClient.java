@@ -8,6 +8,7 @@ import nl.surfnet.oda.EntityHandler;
 import nl.surfnet.oda.ListDeserializer;
 import nl.surfnet.oda.ListHandler;
 import nl.surfnet.oda.NetworkError;
+import nl.surfnet.oda.oauth.OAuthHandler;
 import retrofit.Callback;
 import retrofit.RetrofitError;
 import retrofit.client.Response;
@@ -48,8 +49,8 @@ public class GroupsClient extends AbstractAPIClient<Group> {
      *
      * @param baseUrl URL of the API. For example: https://api.company.com/
      */
-    public GroupsClient(String baseUrl) {
-        super(baseUrl);
+    public GroupsClient(String baseUrl, OAuthHandler oauthHandler) {
+        super(baseUrl, oauthHandler);
         _groupsApi = getRestAdapter(baseUrl).create(GroupsAPIClient.class);
     }
 

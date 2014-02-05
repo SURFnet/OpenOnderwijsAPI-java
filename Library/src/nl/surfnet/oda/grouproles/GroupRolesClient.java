@@ -8,6 +8,7 @@ import nl.surfnet.oda.EntityHandler;
 import nl.surfnet.oda.ListDeserializer;
 import nl.surfnet.oda.ListHandler;
 import nl.surfnet.oda.NetworkError;
+import nl.surfnet.oda.oauth.OAuthHandler;
 import retrofit.Callback;
 import retrofit.RetrofitError;
 import retrofit.client.Response;
@@ -49,8 +50,8 @@ public class GroupRolesClient extends AbstractAPIClient<GroupRole> {
      *
      * @param baseUrl
      */
-    public GroupRolesClient(String baseUrl) {
-        super(baseUrl);
+    public GroupRolesClient(String baseUrl, OAuthHandler oauthHandler) {
+        super(baseUrl, oauthHandler);
         _apiClient = getRestAdapter(baseUrl).create(GroupRolesAPIClient.class);
     }
 
@@ -78,7 +79,7 @@ public class GroupRolesClient extends AbstractAPIClient<GroupRole> {
 
     /**
      * Gets the group role with the given URL from the API
-     * 
+     *
      * @param url URL of the resource which returns a GroupRole entity
      * @param handler The 'success' method is called with the result as parameter if everything went well. Otherwise 'failure' will be called.
      */

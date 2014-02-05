@@ -19,13 +19,18 @@ import nl.surfnet.oda.groups.Group;
 import nl.surfnet.oda.minors.Minor;
 import nl.surfnet.oda.newfeeds.NewsFeed;
 import nl.surfnet.oda.newsitems.NewsItem;
+import nl.surfnet.oda.oauth.OAuthHandler.LoginHandler;
 import nl.surfnet.oda.persons.Person;
 import nl.surfnet.oda.rooms.Room;
 import nl.surfnet.oda.schedule.Lesson;
 import nl.surfnet.oda.testresults.TestResult;
 import android.app.Activity;
 import android.os.Bundle;
+import android.view.View;
+import android.view.View.OnClickListener;
+import android.widget.Button;
 import android.widget.TextView;
+import android.widget.Toast;
 
 /**
  * An example of how to use the Surfnet APIWrapper and the APIClient together.
@@ -35,20 +40,27 @@ import android.widget.TextView;
  */
 public class MainActivity extends Activity {
 
+    private static final String BASE_URL = "http://surfnetapi.pagekite.me/";
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        final TextView numberOfPersons = (TextView)findViewById(R.id.numberOfPersons);
-        final TextView firstPerson = (TextView)findViewById(R.id.firstPerson);
-        // Create a new client for our API
-        final OnderwijsDataAPI apiClient = new OnderwijsDataAPI("http://surfnetapi.pagekite.me/");
 
+        // Create a new client for our API
+        final OnderwijsDataAPI apiClient = new OnderwijsDataAPI(BASE_URL);
+        _setupLoginButton(apiClient);
+        _testAllApis(apiClient);
+    }
+
+    private void _testAllApis(final OnderwijsDataAPI apiClient) {
         /**
          * PERSONS
          */
         // Retrieve the persons info using the PersonsClient
         // we do not add any additional parameters here, so we use null at the params.
+        final TextView numberOfPersons = (TextView)findViewById(R.id.numberOfPersons);
+        final TextView firstPerson = (TextView)findViewById(R.id.firstPerson);
         apiClient.getPersonsClient().getById("1", null, new EntityHandler<Person>() {
 
             @Override
@@ -589,6 +601,30 @@ public class MainActivity extends Activity {
                 // inform the user that an error happened
                 personByUrl.setText("Couldn't get person linked from first role :-(");
                 e.printStackTrace();
+            }
+        });
+    }
+
+    private void _setupLoginButton(final OnderwijsDataAPI api) {
+        Button loginButton = (Button) findViewById(R.id.loginButton);
+        loginButton.setOnClickListener(new OnClickListener() {
+
+            @Override
+            public void onClick(View v) {
+                api.getOAuthHandler().login("admin", "admin", new LoginHandler() {
+
+                    @Override
+                    public void success() {
+                        Toast.makeText(MainActivity.this, "Successful login", Toast.LENGTH_LONG).show();
+                        System.out.println(api.getOAuthHandler().getTokenData().getAccessToken());
+                        _testAllApis(api);
+                    }
+
+                    @Override
+                    public void failure(String message) {
+                        Toast.makeText(MainActivity.this, "Login error: " + message, Toast.LENGTH_LONG).show();
+                    }
+                });
             }
         });
     }
