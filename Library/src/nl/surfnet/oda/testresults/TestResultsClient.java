@@ -15,6 +15,7 @@ import retrofit.client.Response;
 import retrofit.converter.GsonConverter;
 import retrofit.http.EncodedPath;
 import retrofit.http.GET;
+import retrofit.http.Path;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
@@ -42,6 +43,9 @@ public class TestResultsClient extends AbstractAPIClient<TestResult> {
 
         @GET("/{path}{params}")
         public void get(@EncodedPath("path") String path, @EncodedPath("params") String params, Callback<TestResult> cb);
+
+        @GET("/persons/{person_id}/testresults{params}")
+        public void getTestResultsByPerson(@Path("person_id") String person_id, @EncodedPath("params") String params, Callback<List<TestResult>> cb);
     }
 
     private TestResultsAPIClient _apiClient;
@@ -87,6 +91,28 @@ public class TestResultsClient extends AbstractAPIClient<TestResult> {
             @Override
             public void success(TestResult room, Response response) {
                 handler.success(room);
+            }
+
+            @Override
+            public void failure(RetrofitError error) {
+                handler.failure(new NetworkError(error));
+            }
+        });
+    }
+
+    /**
+     * Returns all the test results associated to a person.
+     *
+     * @param personId Unique identifier of the person
+     * @param params Parameters of the query
+     * @param handler Callback for success / failure
+     */
+    public void getTestResultsByPerson(String personId, Params params, final ListHandler<TestResult> handler){
+        _apiClient.getTestResultsByPerson(personId, parametersToString(params), new Callback<List<TestResult>>() {
+
+            @Override
+            public void success(List<TestResult> list, Response response) {
+                handler.success(list);
             }
 
             @Override

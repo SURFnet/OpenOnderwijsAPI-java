@@ -12,10 +12,16 @@ import retrofit.http.POST;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 
+/**
+ * Handles the OAuth registration and session handling.
+ *
+ * @author Daniel Zolnai
+ *
+ */
 public class OAuthHandler {
 
-    private final static String _clientId = "example_id";
-    private final static String _clientSecret = "example_secret";
+    private final static String _clientId = "example_id"; // use your own at your version
+    private final static String _clientSecret = "example_secret"; // use your own at your version
 
     private interface OAuthInterface {
         @FormUrlEncoded
@@ -49,6 +55,13 @@ public class OAuthHandler {
         _tokenData = tokenData;
     }
 
+    /**
+     * Asks for a new access token using the username and the password
+     *
+     * @param username The username of the user
+     * @param password The password of the user
+     * @param handler Callback for success or failure
+     */
     public void login(String username, String password, final LoginHandler handler) {
         _oauth.getAccessToken(username, password, _clientId, _clientSecret, "password", new Callback<TokenData>() {
 
@@ -94,7 +107,7 @@ public class OAuthHandler {
     /**
      * The implementing app is responsible for saving token datas.
      *
-     * @return
+     * @return The java object holding all the data of the tokens.
      */
     public TokenData getTokenData() {
         return _tokenData;
@@ -102,8 +115,8 @@ public class OAuthHandler {
 
     /**
      * Returns whether there is an access token available
-     *
-     * @return
+     * 
+     * @return True if there is an access token available, false if not.
      */
     public boolean isLoggedIn() {
         if (_tokenData != null && _tokenData.getAccessToken() != null) {

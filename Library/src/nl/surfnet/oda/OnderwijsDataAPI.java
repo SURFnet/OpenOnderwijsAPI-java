@@ -52,9 +52,9 @@ public class OnderwijsDataAPI {
     }
 
     /**
-     * Returns the OAuth handler.
+     * Returns the OAuth handler. Needed if the API is OAuth protected, and you want to access it with your credentials.
      *
-     * @return
+     * @return The manager of the authentication with the API.
      */
     public OAuthHandler getOAuthHandler() {
         return _oauthHandler;

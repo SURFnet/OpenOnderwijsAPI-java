@@ -577,6 +577,24 @@ public class MainActivity extends Activity {
             }
         });
 
+        /**
+         * COURSE RESULTS BY PERSON
+         */
+        final TextView courseResultsByPerson = (TextView)findViewById(R.id.courseResultsByPerson);
+        apiClient.getCourseResultsClient().getCourseResultsByPerson("2", null, new ListHandler<CourseResult>() {
+
+            @Override
+            public void success(List<CourseResult> list) {
+                //display the result
+                courseResultsByPerson.setText("The second person has " + list.size() + " course results.");
+            }
+
+            @Override
+            public void failure(NetworkError error) {
+                //inform the user that an error happened
+                courseResultsByPerson.setText("Error getting course results of second person :-(");
+            }
+        });
     }
 
     protected void _getPersonByURL(OnderwijsDataAPI apiClient, List<GroupRole> list) {
@@ -611,6 +629,7 @@ public class MainActivity extends Activity {
 
             @Override
             public void onClick(View v) {
+                // change the credentials in your own app.
                 api.getOAuthHandler().login("admin", "admin", new LoginHandler() {
 
                     @Override
