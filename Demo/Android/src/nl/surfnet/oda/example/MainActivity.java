@@ -22,6 +22,7 @@ import nl.surfnet.oda.newsitems.NewsItem;
 import nl.surfnet.oda.oauth.OAuthHandler.LoginHandler;
 import nl.surfnet.oda.persons.Person;
 import nl.surfnet.oda.rooms.Room;
+import nl.surfnet.oda.schedule.DetailedLesson;
 import nl.surfnet.oda.schedule.Lesson;
 import nl.surfnet.oda.testresults.TestResult;
 import android.app.Activity;
@@ -104,19 +105,19 @@ public class MainActivity extends Activity {
         final TextView AEGBBuilding = (TextView)findViewById(R.id.AEGBBuilding);
         final TextView numberOfBuildings = (TextView)findViewById(R.id.numberOfBuildings);
         // get the building with the ID 'AEGB'
-        apiClient.getBuildingsClient().getById("AEGB", null, new EntityHandler<Building>() {
+        apiClient.getBuildingsClient().getById("1", null, new EntityHandler<Building>() {
 
             @Override
             public void success(Building building) {
                 // display its address
-                AEGBBuilding.setText("The building with the ID 'AEGB' is located at " + building.getAddress());
+                AEGBBuilding.setText("The building with the ID '1' is located at " + building.getAddress());
             }
 
             @Override
             public void failure(NetworkError e) {
                 // inform the user if an error happened
                 e.printStackTrace();
-                AEGBBuilding.setText("Error in getting building with ID: 'AEGB' :-(");
+                AEGBBuilding.setText("Error in getting building with ID: '1' :-(");
             }
         });
         Params buildingsParams = new Params();
@@ -453,10 +454,10 @@ public class MainActivity extends Activity {
             // no start date then (default is today 00:00)
         }
         scheduleParams.setEndDate(new Date());
-        apiClient.getScheduleClient().getScheduleByPerson("1", scheduleParams, new ListHandler<Lesson>() {
+        apiClient.getScheduleClient().getScheduleByPerson("1", scheduleParams, new ListHandler<DetailedLesson>() {
 
             @Override
-            public void success(List<Lesson> list) {
+            public void success(List<DetailedLesson> list) {
                 // display the result
                 schedulePerson.setText("The first person has " + list.size() + " lessons.");
             }

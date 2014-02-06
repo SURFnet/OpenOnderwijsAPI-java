@@ -3,6 +3,8 @@ package nl.surfnet.oda.courseresults;
 import java.util.Date;
 import java.util.List;
 
+import nl.surfnet.oda.courses.Course;
+
 /**
  * Represents a course result.
  *
@@ -13,7 +15,7 @@ public class CourseResult {
 
     private String _id;
     private String _studentUrl;
-    private String _courseUrl;
+    private Course _course;
     private List<String> _testResultUrls;
     private String _url;
     private Date _lastModified;
@@ -59,12 +61,12 @@ public class CourseResult {
         _testResultUrls = testResultUrls;
     }
 
-    public String getCourseUrl() {
-        return _courseUrl;
+    public Course getCourse() {
+        return _course;
     }
 
-    public void setCourseUrl(String courseUrl) {
-        _courseUrl = courseUrl;
+    public void setCourse(Course course) {
+        _course = course;
     }
 
     public Date getLastModifiedDate() {
