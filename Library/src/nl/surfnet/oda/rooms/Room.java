@@ -12,6 +12,7 @@ import java.util.Date;
 
 public class Room {
 
+    private String _id;
     private String _abbr;
     private String _building;
     private String _name;
@@ -22,11 +23,19 @@ public class Room {
     private Date _lastModified;
 
     public String getId() {
-        return _abbr;
+        return _id;
     }
 
     public void setId(String id) {
-        _abbr = id;
+        _id = id;
+    }
+
+    public String getAbbreviation() {
+        return _abbr;
+    }
+
+    public void setAbbreviation(String abbr) {
+        _abbr = abbr;
     }
 
     public String getBuildingUrl() {

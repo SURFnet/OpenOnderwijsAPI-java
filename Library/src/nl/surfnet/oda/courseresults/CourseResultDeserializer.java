@@ -5,6 +5,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 import nl.surfnet.oda.EntityDeserializer;
+import nl.surfnet.oda.courses.Course;
+import nl.surfnet.oda.courses.CourseDeserializer;
 
 import com.google.gson.JsonArray;
 import com.google.gson.JsonDeserializationContext;
@@ -28,7 +30,9 @@ public class CourseResultDeserializer extends EntityDeserializer<CourseResult> {
         JsonObject jsonCourseResult = json.getAsJsonObject();
         CourseResult courseResult = new CourseResult();
         courseResult.setId(getAsStringNoNull(jsonCourseResult.get("id")));
-        courseResult.setCourseUrl(getAsStringNoNull(jsonCourseResult.get("course")));
+        CourseDeserializer courseDeserializer = new CourseDeserializer();
+        Course course = courseDeserializer.deserialize(jsonCourseResult.get("course"), typeOfT, context);
+        courseResult.setCourse(course);
         courseResult.setGrade(getAsDoubleNoNull(jsonCourseResult.get("grade")));
         courseResult.setIfStudentPassed(getAsBooleanNoNull(jsonCourseResult.get("passed")));
         courseResult.setLastModifiedDate(getAsDateNoNull(jsonCourseResult.get("lastModified")));

@@ -11,6 +11,7 @@ import java.util.Date;
  */
 public class Building {
 
+    private String _id = null;
     private String _abbr = null;
     private String _resourceUrl = null;
     private String _name = null;
@@ -29,11 +30,19 @@ public class Building {
     }
 
     public String getId() {
-        return _abbr;
+        return _id;
     }
 
     public void setId(String id) {
-        _abbr = id;
+        _id = id;
+    }
+
+    public String getAbbreviation() {
+        return _abbr;
+    }
+
+    public void setAbbreviation(String abbr) {
+        _abbr = abbr;
     }
 
     public String getResourceUrl() {

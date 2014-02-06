@@ -44,7 +44,7 @@ public class ScheduleClient extends AbstractAPIClient<Lesson> {
         public void get(@EncodedPath("path") String path, @EncodedPath("params") String params, Callback<Lesson> cb);
 
         @GET("/persons/{person_id}/schedule{params}")
-        public void getScheduleByPerson(@Path("person_id") String person_id, @EncodedPath("params") String params, Callback<List<Lesson>> cb);
+        public void getScheduleByPerson(@Path("person_id") String person_id, @EncodedPath("params") String params, Callback<List<DetailedLesson>> cb);
 
         @GET("/rooms/{room_id}/schedule{params}")
         public void getScheduleByRoom(@Path("room_id") String room_id, @EncodedPath("params") String params, Callback<List<Lesson>> cb);
@@ -157,11 +157,11 @@ public class ScheduleClient extends AbstractAPIClient<Lesson> {
      * @param params Parameters of the query. Use null if none.
      * @param handler Callback for success/failure.
      */
-    public void getScheduleByPerson(String person_id, Params params, final ListHandler<Lesson> handler) {
-        _apiClient.getScheduleByPerson(person_id, parametersToString(params), new Callback<List<Lesson>>() {
+    public void getScheduleByPerson(String person_id, Params params, final ListHandler<DetailedLesson> handler) {
+        _apiClient.getScheduleByPerson(person_id, parametersToString(params), new Callback<List<DetailedLesson>>() {
 
             @Override
-            public void success(List<Lesson> list, Response response) {
+            public void success(List<DetailedLesson> list, Response response) {
                 handler.success(list);
             }
 
@@ -179,9 +179,11 @@ public class ScheduleClient extends AbstractAPIClient<Lesson> {
     protected GsonConverter getGsonConverter() {
         //@formatter:off
         Type lessonListType = new TypeToken<List<Lesson>>() {}.getType();
+        Type detailedLessonListType = new TypeToken<List<DetailedLesson>>() {}.getType();
         Gson gson = new GsonBuilder()
         .registerTypeAdapter(Lesson.class, new LessonDeserializer())
         .registerTypeAdapter(lessonListType, new ListDeserializer<Lesson>(new LessonDeserializer()))
+        .registerTypeAdapter(detailedLessonListType, new ListDeserializer<DetailedLesson>(new DetailedLessonDeserializer()))
         .create();
         return new GsonConverter(gson);
         //@formatter:on
