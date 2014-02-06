@@ -12,7 +12,13 @@ public class Lesson {
 
     private String _id;
     private String _url;
+    private String _courseId;
+    private String _courseName;
+    private String _courseAbbr;
+    private String _courseDescription;
     private String _courseUrl;
+    private String _roomId;
+    private String _roomAbbr;
     private String _roomUrl;
     private String _description;
     private Date _start;
@@ -41,12 +47,60 @@ public class Lesson {
         _url = resourceUrl;
     }
 
+    public String getCourseId() {
+        return _courseId;
+    }
+
+    public void setCourseId(String courseId) {
+        _courseId = courseId;
+    }
+
+    public String getCourseName() {
+        return _courseName;
+    }
+
+    public void setCourseName(String courseName) {
+        _courseName = courseName;
+    }
+
+    public String getCourseAbbreviation() {
+        return _courseAbbr;
+    }
+
+    public void setCourseAbbreviation(String courseAbbr) {
+        _courseAbbr = courseAbbr;
+    }
+
+    public String getCourseDescription() {
+        return _courseDescription;
+    }
+
+    public void setCourseDescription(String courseDescription) {
+        _courseDescription = courseDescription;
+    }
+
     public String getCourseUrl() {
         return _courseUrl;
     }
 
     public void setCourseUrl(String courseUrl) {
         _courseUrl = courseUrl;
+    }
+
+    public String getRoomId() {
+        return _roomId;
+    }
+
+    public void setRoomId(String roomId) {
+        _roomId = roomId;
+    }
+
+    public String getRoomAbbreviation() {
+        return _roomAbbr;
+    }
+
+    public void setRoomAbbreviation(String roomAbbr) {
+        _roomAbbr = roomAbbr;
     }
 
     public String getRoomUrl() {

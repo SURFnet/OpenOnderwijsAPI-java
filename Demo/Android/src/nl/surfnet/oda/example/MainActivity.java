@@ -22,7 +22,6 @@ import nl.surfnet.oda.newsitems.NewsItem;
 import nl.surfnet.oda.oauth.OAuthHandler.LoginHandler;
 import nl.surfnet.oda.persons.Person;
 import nl.surfnet.oda.rooms.Room;
-import nl.surfnet.oda.schedule.DetailedLesson;
 import nl.surfnet.oda.schedule.Lesson;
 import nl.surfnet.oda.testresults.TestResult;
 import android.app.Activity;
@@ -454,10 +453,10 @@ public class MainActivity extends Activity {
             // no start date then (default is today 00:00)
         }
         scheduleParams.setEndDate(new Date());
-        apiClient.getScheduleClient().getScheduleByPerson("1", scheduleParams, new ListHandler<DetailedLesson>() {
+        apiClient.getScheduleClient().getScheduleByPerson("1", scheduleParams, new ListHandler<Lesson>() {
 
             @Override
-            public void success(List<DetailedLesson> list) {
+            public void success(List<Lesson> list) {
                 // display the result
                 schedulePerson.setText("The first person has " + list.size() + " lessons.");
             }
