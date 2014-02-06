@@ -8,6 +8,7 @@ import nl.surfnet.oda.EntityHandler;
 import nl.surfnet.oda.ListDeserializer;
 import nl.surfnet.oda.ListHandler;
 import nl.surfnet.oda.NetworkError;
+import nl.surfnet.oda.oauth.OAuthHandler;
 import retrofit.Callback;
 import retrofit.RetrofitError;
 import retrofit.client.Response;
@@ -38,8 +39,8 @@ public class BuildingsClient extends AbstractAPIClient<Building> {
 
     private BuildingsAPIClient _buildingsAPI;
 
-    public BuildingsClient(String baseUrl) {
-        super(baseUrl);
+    public BuildingsClient(String baseUrl, OAuthHandler oauthHandler) {
+        super(baseUrl, oauthHandler);
         _buildingsAPI = getRestAdapter(baseUrl).create(BuildingsAPIClient.class);
     }
 
@@ -67,7 +68,7 @@ public class BuildingsClient extends AbstractAPIClient<Building> {
 
     /**
      * Gets the building with the given URL from the API
-     * 
+     *
      * @param url URL of the resource, which returns a Building entity
      * @param params Parameters of the query
      * @param handler The 'success' method is called with the result as parameter if everything went well. Otherwise 'failure' will be called.

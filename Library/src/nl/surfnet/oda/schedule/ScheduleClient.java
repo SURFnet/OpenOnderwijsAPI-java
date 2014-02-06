@@ -8,6 +8,7 @@ import nl.surfnet.oda.EntityHandler;
 import nl.surfnet.oda.ListDeserializer;
 import nl.surfnet.oda.ListHandler;
 import nl.surfnet.oda.NetworkError;
+import nl.surfnet.oda.oauth.OAuthHandler;
 import retrofit.Callback;
 import retrofit.RetrofitError;
 import retrofit.client.Response;
@@ -55,8 +56,8 @@ public class ScheduleClient extends AbstractAPIClient<Lesson> {
 
     private LessonsAPIClient _apiClient;
 
-    public ScheduleClient(String baseUrl) {
-        super(baseUrl);
+    public ScheduleClient(String baseUrl, OAuthHandler oauthHandler) {
+        super(baseUrl, oauthHandler);
         _apiClient = getRestAdapter(baseUrl).create(LessonsAPIClient.class);
     }
 
@@ -151,7 +152,7 @@ public class ScheduleClient extends AbstractAPIClient<Lesson> {
 
     /**
      * Returns a schedule assiociated to a person.
-     * 
+     *
      * @param person_id ID of the person.
      * @param params Parameters of the query. Use null if none.
      * @param handler Callback for success/failure.

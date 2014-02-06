@@ -9,6 +9,7 @@ import nl.surfnet.oda.groups.GroupsClient;
 import nl.surfnet.oda.minors.MinorsClient;
 import nl.surfnet.oda.newfeeds.NewsFeedsClient;
 import nl.surfnet.oda.newsitems.NewsItemsClient;
+import nl.surfnet.oda.oauth.OAuthHandler;
 import nl.surfnet.oda.persons.PersonsClient;
 import nl.surfnet.oda.rooms.RoomsClient;
 import nl.surfnet.oda.schedule.ScheduleClient;
@@ -23,6 +24,7 @@ import nl.surfnet.oda.testresults.TestResultsClient;
 public class OnderwijsDataAPI {
 
     private String _baseUrl;
+    private OAuthHandler _oauthHandler;
 
     private PersonsClient _personsClient;
     private BuildingsClient _buildingsClient;
@@ -38,6 +40,7 @@ public class OnderwijsDataAPI {
     private TestResultsClient _testResultClient;
     private MinorsClient _minorsClient;
 
+
     /**
      * Basic constructor
      *
@@ -45,6 +48,16 @@ public class OnderwijsDataAPI {
      */
     public OnderwijsDataAPI(String baseUrl) {
         _baseUrl = baseUrl;
+        _oauthHandler = new OAuthHandler(baseUrl);
+    }
+
+    /**
+     * Returns the OAuth handler. Needed if the API is OAuth protected, and you want to access it with your credentials.
+     *
+     * @return The manager of the authentication with the API.
+     */
+    public OAuthHandler getOAuthHandler() {
+        return _oauthHandler;
     }
 
     /**
@@ -54,7 +67,7 @@ public class OnderwijsDataAPI {
      */
     public PersonsClient getPersonsClient() {
         if (_personsClient == null) {
-            _personsClient = new PersonsClient(_baseUrl);
+            _personsClient = new PersonsClient(_baseUrl, _oauthHandler);
         }
         return _personsClient;
     }
@@ -66,7 +79,7 @@ public class OnderwijsDataAPI {
      */
     public BuildingsClient getBuildingsClient() {
         if (_buildingsClient == null) {
-            _buildingsClient = new BuildingsClient(_baseUrl);
+            _buildingsClient = new BuildingsClient(_baseUrl, _oauthHandler);
         }
         return _buildingsClient;
     }
@@ -78,7 +91,7 @@ public class OnderwijsDataAPI {
      */
     public RoomsClient getRoomsClient() {
         if (_roomsClient == null) {
-            _roomsClient = new RoomsClient(_baseUrl);
+            _roomsClient = new RoomsClient(_baseUrl, _oauthHandler);
         }
         return _roomsClient;
     }
@@ -90,7 +103,7 @@ public class OnderwijsDataAPI {
      */
     public GroupsClient getGroupsClient() {
         if (_groupsClient == null) {
-            _groupsClient = new GroupsClient(_baseUrl);
+            _groupsClient = new GroupsClient(_baseUrl, _oauthHandler);
         }
         return _groupsClient;
     }
@@ -102,7 +115,7 @@ public class OnderwijsDataAPI {
      */
     public AffiliationsClient getAffiliationsClient() {
         if (_affiliationsClient == null) {
-            _affiliationsClient = new AffiliationsClient(_baseUrl);
+            _affiliationsClient = new AffiliationsClient(_baseUrl, _oauthHandler);
         }
         return _affiliationsClient;
     }
@@ -114,7 +127,7 @@ public class OnderwijsDataAPI {
      */
     public NewsItemsClient getNewsItemsClient() {
         if (_newsItemsClient == null) {
-            _newsItemsClient = new NewsItemsClient(_baseUrl);
+            _newsItemsClient = new NewsItemsClient(_baseUrl, _oauthHandler);
         }
         return _newsItemsClient;
     }
@@ -126,7 +139,7 @@ public class OnderwijsDataAPI {
      */
     public NewsFeedsClient getNewsFeedsClient() {
         if (_newsFeedsClient == null) {
-            _newsFeedsClient = new NewsFeedsClient(_baseUrl);
+            _newsFeedsClient = new NewsFeedsClient(_baseUrl, _oauthHandler);
         }
         return _newsFeedsClient;
     }
@@ -138,7 +151,7 @@ public class OnderwijsDataAPI {
      */
     public GroupRolesClient getGroupRolesClient(){
         if (_groupRolesClient == null) {
-            _groupRolesClient = new GroupRolesClient(_baseUrl);
+            _groupRolesClient = new GroupRolesClient(_baseUrl, _oauthHandler);
         }
         return _groupRolesClient;
     }
@@ -150,7 +163,7 @@ public class OnderwijsDataAPI {
      */
     public CoursesClient getCoursesClient() {
         if (_coursesClient == null) {
-            _coursesClient = new CoursesClient(_baseUrl);
+            _coursesClient = new CoursesClient(_baseUrl, _oauthHandler);
         }
         return _coursesClient;
     }
@@ -162,7 +175,7 @@ public class OnderwijsDataAPI {
      */
     public ScheduleClient getScheduleClient() {
         if (_scheduleClient == null) {
-            _scheduleClient = new ScheduleClient(_baseUrl);
+            _scheduleClient = new ScheduleClient(_baseUrl, _oauthHandler);
         }
         return _scheduleClient;
     }
@@ -174,7 +187,7 @@ public class OnderwijsDataAPI {
      */
     public CourseResultsClient getCourseResultsClient(){
         if (_courseResultsClient == null) {
-            _courseResultsClient = new CourseResultsClient(_baseUrl);
+            _courseResultsClient = new CourseResultsClient(_baseUrl, _oauthHandler);
         } return _courseResultsClient;
     }
 
@@ -185,19 +198,19 @@ public class OnderwijsDataAPI {
      */
     public TestResultsClient getTestResultsClient() {
         if (_testResultClient == null) {
-            _testResultClient = new TestResultsClient(_baseUrl);
+            _testResultClient = new TestResultsClient(_baseUrl, _oauthHandler);
         }
         return _testResultClient;
     }
 
     /**
      * Returns the client which is responsible for the handling of minors data.
-     * 
+     *
      * @return The client handling minors data.
      */
     public MinorsClient getMinorsClient() {
         if (_minorsClient == null) {
-            _minorsClient = new MinorsClient(_baseUrl);
+            _minorsClient = new MinorsClient(_baseUrl, _oauthHandler);
         }
         return _minorsClient;
     }

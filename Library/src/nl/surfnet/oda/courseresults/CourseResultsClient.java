@@ -8,12 +8,14 @@ import nl.surfnet.oda.EntityHandler;
 import nl.surfnet.oda.ListDeserializer;
 import nl.surfnet.oda.ListHandler;
 import nl.surfnet.oda.NetworkError;
+import nl.surfnet.oda.oauth.OAuthHandler;
 import retrofit.Callback;
 import retrofit.RetrofitError;
 import retrofit.client.Response;
 import retrofit.converter.GsonConverter;
 import retrofit.http.EncodedPath;
 import retrofit.http.GET;
+import retrofit.http.Path;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
@@ -40,12 +42,15 @@ public class CourseResultsClient extends AbstractAPIClient<CourseResult> {
 
         @GET("/{path}{params}")
         public void get(@EncodedPath("path") String path, @EncodedPath("params") String params, Callback<CourseResult> cb);
+
+        @GET("/persons/{person_id}/courseresults{params}")
+        public void getCourseResultsByPerson(@Path("person_id") String personId, @EncodedPath("params") String params, Callback<List<CourseResult>> cb);
     }
 
     private CourseResultsAPIClient _apiClient;
 
-    public CourseResultsClient(String baseUrl) {
-        super(baseUrl);
+    public CourseResultsClient(String baseUrl, OAuthHandler oauthHandler) {
+        super(baseUrl, oauthHandler);
         _apiClient = getRestAdapter(baseUrl).create(CourseResultsAPIClient.class);
     }
 
@@ -90,6 +95,29 @@ public class CourseResultsClient extends AbstractAPIClient<CourseResult> {
             @Override
             public void failure(RetrofitError error) {
                 handler.failure(new NetworkError(error));
+            }
+        });
+    }
+
+    /**
+     * Returns the course results associated to a person with the given ID
+     * 
+     * @param personId The unique identifier of the person
+     * @param params Parameters of the query
+     * @param handler Callback for success or failure
+     */
+    public void getCourseResultsByPerson(String personId, Params params, final ListHandler<CourseResult> handler) {
+        _apiClient.getCourseResultsByPerson(personId, parametersToString(params), new Callback<List<CourseResult>>() {
+
+            @Override
+            public void success(List<CourseResult> list, Response response) {
+                handler.success(list);
+            }
+
+            @Override
+            public void failure(RetrofitError error) {
+                handler.failure(new NetworkError(error));
+
             }
         });
     }

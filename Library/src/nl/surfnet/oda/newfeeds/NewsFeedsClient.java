@@ -8,6 +8,7 @@ import nl.surfnet.oda.EntityHandler;
 import nl.surfnet.oda.ListDeserializer;
 import nl.surfnet.oda.ListHandler;
 import nl.surfnet.oda.NetworkError;
+import nl.surfnet.oda.oauth.OAuthHandler;
 import retrofit.Callback;
 import retrofit.RetrofitError;
 import retrofit.client.Response;
@@ -48,8 +49,8 @@ public class NewsFeedsClient extends AbstractAPIClient<NewsFeed> {
      *
      * @param baseUrl
      */
-    public NewsFeedsClient(String baseUrl) {
-        super(baseUrl);
+    public NewsFeedsClient(String baseUrl, OAuthHandler oauthHandler) {
+        super(baseUrl, oauthHandler);
         _apiClient = getRestAdapter(baseUrl).create(NewsFeedsAPIClient.class);
     }
 
