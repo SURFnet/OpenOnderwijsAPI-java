@@ -40,14 +40,17 @@ public class OnderwijsDataAPI {
     private TestResultsClient _testResultClient;
     private MinorsClient _minorsClient;
 
-
     /**
      * Basic constructor
      *
      * @param baseUrl The URL of your API. For example, https://api.example.com
      */
     public OnderwijsDataAPI(String baseUrl) {
-        _baseUrl = baseUrl;
+        String fixedBaseUrl = baseUrl;
+        if (!fixedBaseUrl.endsWith("/")) {
+            fixedBaseUrl += "/";
+        }
+        _baseUrl = fixedBaseUrl;
         _oauthHandler = new OAuthHandler(baseUrl);
     }
 
@@ -149,7 +152,7 @@ public class OnderwijsDataAPI {
      *
      * @return The client handling group roles data.
      */
-    public GroupRolesClient getGroupRolesClient(){
+    public GroupRolesClient getGroupRolesClient() {
         if (_groupRolesClient == null) {
             _groupRolesClient = new GroupRolesClient(_baseUrl, _oauthHandler);
         }
@@ -185,10 +188,11 @@ public class OnderwijsDataAPI {
      *
      * @return The client handling course results data.
      */
-    public CourseResultsClient getCourseResultsClient(){
+    public CourseResultsClient getCourseResultsClient() {
         if (_courseResultsClient == null) {
             _courseResultsClient = new CourseResultsClient(_baseUrl, _oauthHandler);
-        } return _courseResultsClient;
+        }
+        return _courseResultsClient;
     }
 
     /**
