@@ -448,7 +448,7 @@ public class MainActivity extends Activity {
         final TextView schedulePerson = (TextView)findViewById(R.id.schedulePerson);
         Params scheduleParams = new Params();
         try {
-            scheduleParams.setStartDate(new SimpleDateFormat("yyyy-MM-dd").parse("1996-01-01"));
+            scheduleParams.setStartDate(new SimpleDateFormat("yyyy-MM-dd").parse("2013-02-10"));
         } catch (ParseException e) {
             // no start date then (default is today 00:00)
         }
