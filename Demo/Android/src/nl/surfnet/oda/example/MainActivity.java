@@ -40,7 +40,7 @@ import android.widget.Toast;
  */
 public class MainActivity extends Activity {
 
-    private static final String BASE_URL = "http://surfnetapi.pagekite.me/";
+    private static final String BASE_URL = "http://surfnetapi.pagekite.me";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
